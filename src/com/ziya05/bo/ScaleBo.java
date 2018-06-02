@@ -1,7 +1,15 @@
 package com.ziya05.bo;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import com.ziya05.dao.IScaleDao;
 import com.ziya05.entities.Factor;
@@ -16,7 +24,7 @@ public class ScaleBo implements IScaleBo {
 	private IScaleDao dao = ScaleDaoFactory.createScaleDao();
 
 	@Override
-	public Result getResult(int id, SelectedData selected) {
+	public Result getResult(int id, SelectedData selected) throws ClassNotFoundException, SQLException, ScriptException {
 		List<Factor> factorLst = dao.getFactorListByScale(id);
 		List<OptionSelected> osLst = selected.getItems();
 		
@@ -25,21 +33,19 @@ public class ScaleBo implements IScaleBo {
 		List<FactorPair> pairLst = new ArrayList<FactorPair>();
 		result.setItems(pairLst);
 		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		for(OptionSelected os : osLst) {
+
+			map.put("Q"+os.getQuestionId(), os.getScore());
+		}
+		
 		for(Factor factor : factorLst) {
-			int sum = 0;
-			for(Integer i : factor.getItems()) {
-				for(OptionSelected os : osLst) {
-					if (i.intValue() == os.getQuestionId()) {
-						sum += os.getScore();
-						break;
-					}
-				}
-			}
-			
+			double score = this.calcScore(factor.getFormula(), map);
+
 			FactorPair pair = null;
 			for(Level level : factor.getLevelList()) {
-				if (level.getMinValue() <= sum 
-						&& level.getMaxValue() >= sum) {
+				if (level.getMinValue() <= score 
+						&& level.getMaxValue() >= score) {
 					pair = new FactorPair(level.getName(), level.getDescription());
 					break;
 				}
@@ -51,4 +57,16 @@ public class ScaleBo implements IScaleBo {
 		return result;
 	}
 
+	private double calcScore(String formula, Map<String, Integer> map) throws ScriptException {
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("js");
+		for(String key : map.keySet()) {
+			engine.put(key, map.get(key));
+		}
+
+		Object result = engine.eval(formula);
+
+		double d = new Double(result.toString());
+		return d;
+	}
 }

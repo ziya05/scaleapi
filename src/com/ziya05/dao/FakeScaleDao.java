@@ -18,15 +18,15 @@ public class FakeScaleDao implements IScaleDao {
 		List<Scale> scales = new ArrayList<Scale>();
 		
 		scales.add(new Scale(1, "测一测你的智商量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(2, "九型人格测试量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(3, "你每个月赚多少钱量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(4, "看看你还能活几年量表", "心理学是一门研究人类心理现象及其影响下的精神功能和行为活动的科学，兼顾突出的理论性和应用（实践）性。 心理学包括基础心理学与应用心理学两大领域，其研究涉及知觉、认知、情绪、思维、人格、行为习惯、人际关系、社会关系等许多领域，也与日常生活的许多领域——家庭、教育、健康、社会等发生关联。"));
-		scales.add(new Scale(5, "玛格利特普拉斯及量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(6, "ranger量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(7, "说出你的故事", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(8, "人鬼情未了", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(9, "每天吃啥量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
-		scales.add(new Scale(10, "试试特殊字符", "这有个\"的和[]dj诗歌啥{为什么}我也不是到, 这是个什么"));
+		scales.add(new Scale(3, "九型人格测试量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(4, "你每个月赚多少钱量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(5, "看看你还能活几年量表", "心理学是一门研究人类心理现象及其影响下的精神功能和行为活动的科学，兼顾突出的理论性和应用（实践）性。 心理学包括基础心理学与应用心理学两大领域，其研究涉及知觉、认知、情绪、思维、人格、行为习惯、人际关系、社会关系等许多领域，也与日常生活的许多领域——家庭、教育、健康、社会等发生关联。"));
+		scales.add(new Scale(6, "玛格利特普拉斯及量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(7, "ranger量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(8, "说出你的故事", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(9, "人鬼情未了", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(10, "每天吃啥量表", "这是一个测试智商的量表， 作者是当代心理学大师某某某"));
+		scales.add(new Scale(11, "试试特殊字符", "这有个\"的和[]dj诗歌啥{为什么}我也不是到, 这是个什么"));
 		
 		return scales;
 	}
@@ -69,11 +69,8 @@ public class FakeScaleDao implements IScaleDao {
 		
 		Factor factor1 = new Factor();
 		factor1.setName("任性程度");
-		factor1.setItems(new ArrayList<Integer>() {{
-			add(new Integer(1));
-			add(new Integer(2));
-			add(new Integer(5));
-		}});
+		factor1.setFormula("Q1+Q2+Q5");
+
 		factor1.setLevelList(new ArrayList() {{
 			add(new Level(0, 3, "不咋任性", "你是一个不咋任性的人，坚持这个性格，对你没好处！"));
 			add(new Level(4, 6, "有点任性", "你是一个有点任性的人， 哈哈哈哈"));
@@ -85,11 +82,8 @@ public class FakeScaleDao implements IScaleDao {
 		
 		Factor factor2 = new Factor();
 		factor2.setName("败家程度");
-		factor2.setItems(new ArrayList() {{
-			add(new Integer(3));
-			add(new Integer(4));
-			add(new Integer(7));
-		}});
+		factor2.setFormula("if (Q3 == 2) Q4 else Q7"); 
+
 		factor2.setLevelList(new ArrayList() {{
 			add(new Level(0, 4, "不咋败家", "肯定是挣钱少！！！"));
 			add(new Level(5, 9, "亦败家，亦不败家", "不知道该说啥，此刻的世界是如此的渺小！"));
@@ -99,11 +93,8 @@ public class FakeScaleDao implements IScaleDao {
 		
 		Factor factor3 = new Factor();
 		factor3.setName("智商");
-		factor3.setItems(new ArrayList() {{
-			add(new Integer(3));
-			add(new Integer(4));
-			add(new Integer(7));
-		}});
+		factor3.setFormula("Q3 + Q4 + Q7");
+
 		factor3.setLevelList(new ArrayList() {{
 			add(new Level(0, 3, "愚蠢的人类", "快去自我毁灭吧！"));
 			add(new Level(4, 6, "不愚蠢，只是白痴", "(￣▽￣)\""));

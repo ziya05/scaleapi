@@ -8,6 +8,7 @@ public class Option implements Serializable {
 	private String content;
 	private int score = 0;
 	private int next = -1;
+	private int questionId;
 	
 	public Option() {}
 	
@@ -55,5 +56,14 @@ public class Option implements Serializable {
 
 	public void setNext(int next) {
 		this.next = next;
+	}
+
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
 	}	
+	
 }

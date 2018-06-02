@@ -1,7 +1,9 @@
 package com.ziya05.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.script.ScriptException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -30,26 +32,25 @@ public class ScaleService {
     @GET 
     @Path("/scales") 
     @Produces(MediaType.APPLICATION_JSON) 
-    public List<Scale> getScales(){ 
+    public List<Scale> getScales() throws ClassNotFoundException, SQLException{ 
     	
-    	Sleep();
-    	
-       return dao.getAllScales(); 
+    	//Sleep();
+        return dao.getAllScales(); 
     }  
     
     @GET 
     @Path("/personalInfo/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
-    public PersonalInfo getPersonalInfoById(@PathParam("id") int id) {
-    	Sleep();
+    public PersonalInfo getPersonalInfoById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
+    	//Sleep();
     	return dao.getPersonalInfoByScaleId(id);
     }
 	
     @GET 
     @Path("/scale/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
-	public Scale getScaleById(@PathParam("id") int id) {
-    	Sleep();
+	public Scale getScaleById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
+    	//Sleep();
 		return dao.getScaleByScaleId(id);
 	}
     
@@ -57,7 +58,7 @@ public class ScaleService {
     @Path("/scale/result/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     @Consumes(MediaType.APPLICATION_JSON)
-    public Result getResult(@PathParam("id") int id, UserHistoryData data) {
+    public Result getResult(@PathParam("id") int id, UserHistoryData data) throws ClassNotFoundException, SQLException, ScriptException {
     	Sleep();
     	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
     	Result result = bo.getResult(id, data.getData());

@@ -4,16 +4,17 @@ import java.io.Serializable;
 
 public class Level implements Serializable {
 	private static final long serialVersionUID = 1L; 
-	private int minValue;
-	private int maxValue;
+	private double minValue;
+	private double maxValue;
 	private String name;
 	private String description;
+	private int factorId;
 	
 	public Level() {
 		super();
 	}
 
-	public Level(int minValue, int maxValue, String name, String description) {
+	public Level(double minValue, double maxValue, String name, String description) {
 		super();
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -21,19 +22,19 @@ public class Level implements Serializable {
 		this.description = description;
 	}
 
-	public int getMinValue() {
+	public double getMinValue() {
 		return minValue;
 	}
 
-	public void setMinValue(int minValue) {
+	public void setMinValue(double minValue) {
 		this.minValue = minValue;
 	}
 
-	public int getMaxValue() {
+	public double getMaxValue() {
 		return maxValue;
 	}
 
-	public void setMaxValue(int maxValue) {
+	public void setMaxValue(double maxValue) {
 		this.maxValue = maxValue;
 	}
 
@@ -51,6 +52,14 @@ public class Level implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getFactorId() {
+		return factorId;
+	}
+
+	public void setFactorId(int factorId) {
+		this.factorId = factorId;
 	}
 	
 }
