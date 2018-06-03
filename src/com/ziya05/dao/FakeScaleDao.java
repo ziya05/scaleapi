@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ziya05.entities.Factor;
+import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
 import com.ziya05.entities.Level;
 import com.ziya05.entities.Option;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Question;
+import com.ziya05.entities.Relation;
 import com.ziya05.entities.Scale;
 
 public class FakeScaleDao implements IScaleDao {
@@ -38,6 +40,7 @@ public class FakeScaleDao implements IScaleDao {
 			add(new InfoItem("school", "毕业院校"));
 			add(new InfoItem("major", "专业"));
 			add(new InfoItem("hobby", "兴趣爱好"));
+			add(new InfoItem("age", "年龄"));
 		}});
 		
 		return info;
@@ -68,38 +71,41 @@ public class FakeScaleDao implements IScaleDao {
 		List<Factor> lst = new ArrayList<Factor>();
 		
 		Factor factor1 = new Factor();
+		factor1.setFactorId(1);
 		factor1.setName("任性程度");
 		factor1.setFormula("Q1+Q2+Q5");
 
 		factor1.setLevelList(new ArrayList() {{
-			add(new Level(0, 3, "不咋任性", "你是一个不咋任性的人，坚持这个性格，对你没好处！"));
-			add(new Level(4, 6, "有点任性", "你是一个有点任性的人， 哈哈哈哈"));
-			add(new Level(7, 10, "特别任性", "你太任性了， 真是一个不知悔改的傻蛋！"));
-			add(new Level(11, 50, "有点作了", "你咋能如此地任性， 我不懂！"));
+			add(new Level(1, 1, "不咋任性", "你是一个不咋任性的人，坚持这个性格，对你没好处！"));
+			add(new Level(1, 2, "有点任性", "你是一个有点任性的人， 哈哈哈哈"));
+			add(new Level(1, 3, "特别任性", "你太任性了， 真是一个不知悔改的傻蛋！"));
+			add(new Level(1, 4, "有点作了", "你咋能如此地任性， 我不懂！"));
 		}});
 		lst.add(factor1);
 		
 		
 		Factor factor2 = new Factor();
+		factor2.setFactorId(2);
 		factor2.setName("败家程度");
-		factor2.setFormula("if (Q3 == 2) Q4 else Q7"); 
+		factor2.setFormula("if (Q3 == 2) {Q4} else {Q7}"); 
 
 		factor2.setLevelList(new ArrayList() {{
-			add(new Level(0, 4, "不咋败家", "肯定是挣钱少！！！"));
-			add(new Level(5, 9, "亦败家，亦不败家", "不知道该说啥，此刻的世界是如此的渺小！"));
-			add(new Level(10, 50, "非常败家", "滚！"));
+			add(new Level(2, 1, "不咋败家", "肯定是挣钱少！！！"));
+			add(new Level(2, 2, "亦败家，亦不败家", "不知道该说啥，此刻的世界是如此的渺小！"));
+			add(new Level(2, 3, "非常败家", "滚！"));
 		}});
 		lst.add(factor2);
 		
 		Factor factor3 = new Factor();
+		factor3.setFactorId(3);
 		factor3.setName("智商");
 		factor3.setFormula("Q3 + Q4 + Q7");
 
 		factor3.setLevelList(new ArrayList() {{
-			add(new Level(0, 3, "愚蠢的人类", "快去自我毁灭吧！"));
-			add(new Level(4, 6, "不愚蠢，只是白痴", "(￣▽￣)\""));
-			add(new Level(7, 10, "一般人儿", "就是一般人儿， 一般地人儿啊。。。。"));
-			add(new Level(11, 50, "人精", "建国后不许成精！"));
+			add(new Level(3, 1, "愚蠢的人类", "快去自我毁灭吧！"));
+			add(new Level(3, 2, "不愚蠢，只是白痴", "(￣▽￣)\""));
+			add(new Level(3, 3, "一般人儿", "就是一般人儿， 一般地人儿啊。。。。"));
+			add(new Level(3, 4, "人精", "建国后不许成精！"));
 		}});
 		lst.add(factor3);
 		
@@ -136,6 +142,40 @@ public class FakeScaleDao implements IScaleDao {
 		lst.add(new Option(3, "点我会跳转到：" + nextId, 3, nextId));
 		lst.add(new Option(4, "要怎样啦", 4));
 		
+		return lst;
+	}
+
+	@Override
+	public List<Group> getGroupListByScale(int scaleId) {
+		List<Group> lst = new ArrayList<Group>();	
+		
+		lst.add(new Group(1, "男娃娃", "性别=='男' && 年龄 < 10"));
+		lst.add(new Group(2, "女娃娃", "性别=='女' && 年龄 < 10"));
+		lst.add(new Group(3, "男青年", "性别=='男' && 年龄 >= 10 && 年龄 < 40"));
+		lst.add(new Group(4, "女青年", "性别=='女' && 年龄 >= 10 && 年龄 < 35"));
+		lst.add(new Group(5, "其他人", "(性别=='男' && 年龄 >= 40) || (性别 == '女' && 年龄 >= 35)"));
+		lst.add(new Group(6, "全体", "1==1"));
+		
+		
+		
+		return lst;
+	}
+
+	@Override
+	public List<Relation> getRelationByScale(int scaleId) {
+		List<Relation> lst = new ArrayList<Relation>();
+		
+		lst.add(new Relation(1, 1, " 5, 8, 15"));
+		lst.add(new Relation(1, 2, " 7, 10, 12"));
+		lst.add(new Relation(1, 3, " 6, 8, 11"));
+		lst.add(new Relation(1, 4, " 5, 7, 10"));
+		lst.add(new Relation(1, 5, " 4, 8, 12"));
+
+		lst.add(new Relation(2, 6, "5, 10"));
+		
+		lst.add(new Relation(3, 1, "6, 12"));
+		lst.add(new Relation(3, 2, "4, 8"));
+
 		return lst;
 	}
 }

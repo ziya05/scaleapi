@@ -6,6 +6,6 @@ import com.ziya05.dao.FakeScaleDao;
 
 public class ScaleDaoFactory {
 	public static IScaleDao createScaleDao() {
-		return new ScaleDao();
+		return new FakeScaleDao();
 	}
 }

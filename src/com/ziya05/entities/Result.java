@@ -7,25 +7,27 @@ public class Result implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private String description;
 	private UserHistoryData data;
+	private List<String> groupLst;
 	
-	private List<FactorPair> items;
+	private List<FactorResult> items;
 
 	public Result() {
 		super();
 	}
 
-	public Result(List<FactorPair> items, String description, UserHistoryData data) {
+	public Result(List<FactorResult> items, String description, UserHistoryData data, List<String> groupLst) {
 		super();
 		this.items = items;
 		this.description = description;
 		this.data = data;
+		this.groupLst = groupLst;
 	}
 
-	public List<FactorPair> getItems() {
+	public List<FactorResult> getItems() {
 		return items;
 	}
 
-	public void setItems(List<FactorPair> items) {
+	public void setItems(List<FactorResult> items) {
 		this.items = items;
 	}
 
@@ -44,6 +46,12 @@ public class Result implements Serializable {
 	public void setData(UserHistoryData data) {
 		this.data = data;
 	}
-	
-	
+
+	public List<String> getGroupLst() {
+		return groupLst;
+	}
+
+	public void setGroupLst(List<String> groupLst) {
+		this.groupLst = groupLst;
+	}
 }

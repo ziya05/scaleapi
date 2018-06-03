@@ -61,7 +61,7 @@ public class ScaleService {
     public Result getResult(@PathParam("id") int id, UserHistoryData data) throws ClassNotFoundException, SQLException, ScriptException {
     	Sleep();
     	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
-    	Result result = bo.getResult(id, data.getData());
+    	Result result = bo.getResult(id, data);
     	result.setData(data);
     	return result;
     }

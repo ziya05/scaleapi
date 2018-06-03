@@ -2,19 +2,21 @@ package com.ziya05.entities;
 
 import java.io.Serializable;
 
-public class FactorPair implements Serializable {
+public class FactorResult implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private String name;
 	private String description;
+	private String advice;
 	
-	public FactorPair() {
+	public FactorResult() {
 		super();
 	}
 
-	public FactorPair(String name, String description) {
+	public FactorResult(String name, String description, String advice) {
 		super();
 		this.name = name;
 		this.description = description;
+		this.advice = advice;
 	}
 
 	public String getName() {
@@ -31,5 +33,13 @@ public class FactorPair implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAdvice() {
+		return advice;
+	}
+
+	public void setAdvice(String advice) {
+		this.advice = advice;
 	}
 }

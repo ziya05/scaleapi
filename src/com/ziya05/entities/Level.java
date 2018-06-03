@@ -4,46 +4,38 @@ import java.io.Serializable;
 
 public class Level implements Serializable {
 	private static final long serialVersionUID = 1L; 
-	private double minValue;
-	private double maxValue;
-	private String name;
-	private String description;
+	
 	private int factorId;
+	private int levelId;
+	private String description;
+	private String advice;
 	
 	public Level() {
 		super();
 	}
 
-	public Level(double minValue, double maxValue, String name, String description) {
+	public Level(int factorId, int levelId, String description, String advice) {
 		super();
-		this.minValue = minValue;
-		this.maxValue = maxValue;
-		this.name = name;
+		this.factorId = factorId;
+		this.levelId = levelId;
 		this.description = description;
+		this.advice = advice;
 	}
 
-	public double getMinValue() {
-		return minValue;
+	public int getFactorId() {
+		return factorId;
 	}
 
-	public void setMinValue(double minValue) {
-		this.minValue = minValue;
+	public void setFactorId(int factorId) {
+		this.factorId = factorId;
 	}
 
-	public double getMaxValue() {
-		return maxValue;
+	public int getLevelId() {
+		return levelId;
 	}
 
-	public void setMaxValue(double maxValue) {
-		this.maxValue = maxValue;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setLevelId(int levelId) {
+		this.levelId = levelId;
 	}
 
 	public String getDescription() {
@@ -54,12 +46,12 @@ public class Level implements Serializable {
 		this.description = description;
 	}
 
-	public int getFactorId() {
-		return factorId;
+	public String getAdvice() {
+		return advice;
 	}
 
-	public void setFactorId(int factorId) {
-		this.factorId = factorId;
+	public void setAdvice(String advice) {
+		this.advice = advice;
 	}
 	
 }
