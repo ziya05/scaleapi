@@ -2,17 +2,17 @@ package com.ziya05.entities;
 
 import java.io.Serializable;
 
-public class UserHistoryData implements Serializable {
+public class TesteeData implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	
 	private PersonalInfo info;
 	private SelectedData data;
 	
-	public UserHistoryData() {
+	public TesteeData() {
 		super();
 	}
 
-	public UserHistoryData(PersonalInfo info, SelectedData data) {
+	public TesteeData(PersonalInfo info, SelectedData data) {
 		super();
 		this.info = info;
 		this.data = data;

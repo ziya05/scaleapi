@@ -1,5 +1,6 @@
 package com.ziya05.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import com.ziya05.entities.Option;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Question;
 import com.ziya05.entities.Relation;
+import com.ziya05.entities.Result;
 import com.ziya05.entities.Scale;
+import com.ziya05.entities.TesteeData;
 
 public class FakeScaleDao implements IScaleDao {
 	
@@ -115,11 +118,11 @@ public class FakeScaleDao implements IScaleDao {
 	private List<Option> getOptionList(){
 		List<Option> lst = new ArrayList();
 		
-		lst.add(new Option(1, "是", 1));
-		lst.add(new Option(2, "不是", 2));
-		lst.add(new Option(3, "不好说", 3));
-		lst.add(new Option(4, "要怎样啦", 4));
-		lst.add(new Option(5, "不理你了啦", 5));
+		lst.add(new Option("A", "是", 1));
+		lst.add(new Option("B", "不是", 2));
+		lst.add(new Option("C", "不好说", 3));
+		lst.add(new Option("D", "要怎样啦", 4));
+		lst.add(new Option("E", "不理你了啦", 5));
 		
 		return lst;
 	}
@@ -127,9 +130,9 @@ public class FakeScaleDao implements IScaleDao {
 	private List<Option> getOptionList2() {
 		List<Option> lst = new ArrayList();
 		
-		lst.add(new Option(1, "随便啦", 2));
-		lst.add(new Option(2, "吃屎啦", 4));
-		lst.add(new Option(3, "不要嘛", 6));
+		lst.add(new Option("A", "随便啦", 2));
+		lst.add(new Option("B", "吃屎啦", 4));
+		lst.add(new Option("C", "不要嘛", 6));
 		
 		return lst;
 	}
@@ -137,10 +140,10 @@ public class FakeScaleDao implements IScaleDao {
 	private List<Option> getOptionList3(int nextId){
 		List<Option> lst = new ArrayList();
 		
-		lst.add(new Option(1, "是", 1));
-		lst.add(new Option(2, "不是", 2));
-		lst.add(new Option(3, "点我会跳转到：" + nextId, 3, nextId));
-		lst.add(new Option(4, "要怎样啦", 4));
+		lst.add(new Option("A", "是", 1));
+		lst.add(new Option("B", "不是", 2));
+		lst.add(new Option("C", "点我会跳转到：" + nextId, 3, nextId));
+		lst.add(new Option("D", "要怎样啦", 4));
 		
 		return lst;
 	}
@@ -173,9 +176,35 @@ public class FakeScaleDao implements IScaleDao {
 
 		lst.add(new Relation(2, 6, "5, 10"));
 		
-		lst.add(new Relation(3, 1, "6, 12"));
-		lst.add(new Relation(3, 2, "4, 8"));
+		lst.add(new Relation(3, 1, "6, 12, 18"));
+		lst.add(new Relation(3, 2, "4, 8, 10"));
 
 		return lst;
+	}
+
+	@Override
+	public int insertTesteeBase(int scaleId, TesteeData data) {
+		return 1;
+	}
+
+	@Override
+	public void insertTesteePersonalInfo(int scaleId, int baseId, TesteeData data) {
+		
+	}
+
+	@Override
+	public void insertTesteeData(int scaleId, int baseId, TesteeData data) throws ClassNotFoundException, SQLException {
+
+	}
+
+	@Override
+	public void insertResultBase(int scaleId, int testeeBaseId, Result result)
+			throws ClassNotFoundException, SQLException {
+		
+	}
+
+	@Override
+	public void insertResultFactor(int scaleId, int testeeBaseId, Result result)
+			throws ClassNotFoundException, SQLException {		
 	}
 }

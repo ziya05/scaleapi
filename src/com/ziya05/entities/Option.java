@@ -2,26 +2,26 @@ package com.ziya05.entities;
 
 import java.io.Serializable;
 
-public class Option implements Serializable {
+public class Option implements Serializable, Comparable<Option> {
 	private static final long serialVersionUID = 1L; 
-	private int id;
+	private String optionId;
 	private String content;
-	private int score = 0;
+	private int score = -1;
 	private int next = -1;
 	private int questionId;
 	
 	public Option() {}
 	
-	public Option(int id, String content, int score) {
+	public Option(String optionId, String content, int score) {
 		super();
-		this.id = id;
+		this.optionId = optionId;
 		this.content = content;
 		this.score = score;
 	}
 
-	public Option(int id, String content, int score, int next) {
+	public Option(String optionId, String content, int score, int next) {
 		super();
-		this.id = id;
+		this.optionId = optionId;
 		this.content = content;
 		this.next = next;
 	}
@@ -32,14 +32,14 @@ public class Option implements Serializable {
 
 	public void setScore(int score) {
 		this.score = score;
+	}	
+
+	public String getOptionId() {
+		return optionId;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setOptionId(String optionId) {
+		this.optionId = optionId;
 	}
 
 	public String getContent() {
@@ -64,6 +64,17 @@ public class Option implements Serializable {
 
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
+	}
+
+	@Override
+	public int compareTo(Option arg0) {
+		if (this.optionId.compareTo(arg0.getOptionId()) > 0) {
+			return 1;
+		} else if (this.optionId.compareTo(arg0.getOptionId()) < 0) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}	
 	
 }

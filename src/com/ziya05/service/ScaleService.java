@@ -20,7 +20,7 @@ import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Result;
 import com.ziya05.entities.Scale;
 import com.ziya05.entities.SelectedData;
-import com.ziya05.entities.UserHistoryData;
+import com.ziya05.entities.TesteeData;
 import com.ziya05.factories.ScaleBoFactory;
 import com.ziya05.factories.ScaleDaoFactory;
 
@@ -33,8 +33,7 @@ public class ScaleService {
     @Path("/scales") 
     @Produces(MediaType.APPLICATION_JSON) 
     public List<Scale> getScales() throws ClassNotFoundException, SQLException{ 
-    	
-    	//Sleep();
+    	Sleep();
         return dao.getAllScales(); 
     }  
     
@@ -42,7 +41,7 @@ public class ScaleService {
     @Path("/personalInfo/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     public PersonalInfo getPersonalInfoById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-    	//Sleep();
+    	Sleep();
     	return dao.getPersonalInfoByScaleId(id);
     }
 	
@@ -50,7 +49,7 @@ public class ScaleService {
     @Path("/scale/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
 	public Scale getScaleById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-    	//Sleep();
+    	Sleep();
 		return dao.getScaleByScaleId(id);
 	}
     
@@ -58,17 +57,18 @@ public class ScaleService {
     @Path("/scale/result/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     @Consumes(MediaType.APPLICATION_JSON)
-    public Result getResult(@PathParam("id") int id, UserHistoryData data) throws ClassNotFoundException, SQLException, ScriptException {
+    public void saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException {
     	Sleep();
     	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
+    	int baseId = bo.saveTesteeData(id, data);
+    	
     	Result result = bo.getResult(id, data);
-    	result.setData(data);
-    	return result;
+    	bo.saveResult(id, baseId, result);
     }
     
     private void Sleep() {
     	try {
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

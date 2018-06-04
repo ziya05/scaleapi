@@ -6,7 +6,7 @@ import java.util.List;
 public class Result implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private String description;
-	private UserHistoryData data;
+	private TesteeData data;
 	private List<String> groupLst;
 	
 	private List<FactorResult> items;
@@ -15,7 +15,7 @@ public class Result implements Serializable {
 		super();
 	}
 
-	public Result(List<FactorResult> items, String description, UserHistoryData data, List<String> groupLst) {
+	public Result(List<FactorResult> items, String description, TesteeData data, List<String> groupLst) {
 		super();
 		this.items = items;
 		this.description = description;
@@ -39,11 +39,11 @@ public class Result implements Serializable {
 		this.description = description;
 	}
 
-	public UserHistoryData getData() {
+	public TesteeData getData() {
 		return data;
 	}
 
-	public void setData(UserHistoryData data) {
+	public void setData(TesteeData data) {
 		this.data = data;
 	}
 

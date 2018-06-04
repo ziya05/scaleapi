@@ -2,21 +2,28 @@ package com.ziya05.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.ziya05.entities.Factor;
+import com.ziya05.entities.FactorResult;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
 import com.ziya05.entities.Level;
 import com.ziya05.entities.Option;
+import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Question;
 import com.ziya05.entities.Relation;
+import com.ziya05.entities.Result;
 import com.ziya05.entities.Scale;
+import com.ziya05.entities.TesteeData;
 
 public class ScaleDao implements IScaleDao {
 
@@ -27,7 +34,7 @@ public class ScaleDao implements IScaleDao {
 		Statement stmt = conn.createStatement();
 		
 		List<Scale> lst = new ArrayList<Scale>();
-		String sql = "select id, name, description from scale where isdelete = 0";
+		String sql = "select id, name, description from Scale where isdelete = 0 order by id";
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Scale scale = new Scale();
@@ -51,7 +58,7 @@ public class ScaleDao implements IScaleDao {
 		PersonalInfo info = new PersonalInfo();
 		List<InfoItem> items = new ArrayList<InfoItem>();
 		info.setItems(items);
-		String sql = String.format("select name, title from scale_personal_config where scaleId = %d", scaleId);
+		String sql = String.format("select name, title from ScalePersonalConfig where scaleId = %d", scaleId);
 		
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
@@ -73,7 +80,7 @@ public class ScaleDao implements IScaleDao {
 		Connection conn = getConn();
 		Statement stmt = conn.createStatement();
 		
-		String sql = String.format("select id, name, description from scale where isdelete = 0 and id = %d", scaleId);
+		String sql = String.format("select id, name, description from Scale where isdelete = 0 and id = %d", scaleId);
 		ResultSet rs = stmt.executeQuery(sql);
 		rs.next();
 
@@ -86,13 +93,12 @@ public class ScaleDao implements IScaleDao {
 
 		List<Question> questionLst = new ArrayList<Question>();
 		scale.setItems(questionLst);
-		sql = String.format("select questionId, title from question where scaleId = %d", scaleId);
+		sql = String.format("select questionId, title from Question where scaleId = %d order by questionId", scaleId);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Question question = new Question();
 			question.setId(rs.getInt("questionId"));
 			question.setTitle(rs.getString("title"));
-			question.setItems(new ArrayList<Option>());
 			questionLst.add(question);
 			
 		}
@@ -100,12 +106,12 @@ public class ScaleDao implements IScaleDao {
 		rs.close();
 		
 		List<Option> optionLst = new ArrayList<Option>();
-		sql = String.format("select questionId, optionId, content, score, next from `option` where scaleId = %d", scaleId);
+		sql = String.format("select questionId, optionId, content, score, next from `Option` where scaleId = %d order by questionId, optionId", scaleId);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Option option = new Option();
 			option.setQuestionId(rs.getInt("questionId"));
-			option.setId(rs.getInt("optionId"));
+			option.setOptionId(rs.getString("optionId"));
 			option.setContent(rs.getString("content"));
 			option.setScore(rs.getInt("score"));
 			option.setNext(rs.getInt("next"));
@@ -116,14 +122,18 @@ public class ScaleDao implements IScaleDao {
 		conn.close();
 		
 		for(Question question : questionLst) {
+			List<Option> oLst = new ArrayList<Option>();
+			question.setItems(oLst);
 			int len = optionLst.size();
 			for (int i = len -1; i >= 0; i--) {
 				Option option = optionLst.get(i);
 				if (option.getQuestionId() == question.getId()) {
-					question.getItems().add(option);
+					oLst.add(option);
 					optionLst.remove(option);
 				}
 			}
+			
+			Collections.sort(oLst);
 		}
 		
 		return scale;
@@ -132,64 +142,213 @@ public class ScaleDao implements IScaleDao {
 	@Override
 	public List<Factor> getFactorListByScale(int scaleId) throws ClassNotFoundException, SQLException {
 		
-//		Connection conn = getConn();
-//		Statement stmt = conn.createStatement();
-//		
-//		List<Factor> factorLst = new ArrayList<Factor>();
-//		String sql = String.format("select factorId, name, formula from factor where scaleId = %d", id);
-//		ResultSet rs = stmt.executeQuery(sql);
-//		while(rs.next()) {
-//			Factor factor = new Factor();
-//			factor.setFactorId(rs.getInt("factorId"));
-//			factor.setName(rs.getString("name"));
-//			factor.setFormula(rs.getString("formula"));
-//			factorLst.add(factor);
-//		}
-//		
-//		rs.close();
-//		
-//		List<Level> levelLst = new ArrayList<Level>();
-//		sql = String.format("select factorId, minValue, `maxValue`, name, description from `level` where scaleId = %d", id);
-//		rs = stmt.executeQuery(sql);
-//		while(rs.next()) {
-//			Level level = new Level();
-//			level.setFactorId(rs.getInt("factorId"));
-//			level.setMinValue(rs.getDouble("minValue"));
-//			level.setMaxValue(rs.getDouble("maxValue"));
-//			level.setName(rs.getString("name"));
-//			level.setDescription(rs.getString("description"));
-//			levelLst.add(level);
-//		}
-//		
-//		rs.close();
-//		
-//		for (Factor factor : factorLst) {
-//			List<Level> lst = new ArrayList<Level>();
-//			factor.setLevelList(lst);
-//			int len = levelLst.size();
-//			for(int i = len - 1; i >= 0; i--) {
-//				Level level = levelLst.get(i);
-//				if (factor.getFactorId() == level.getFactorId()) {
-//					lst.add(level);
-//					levelLst.remove(level);
-//				}
-//			}
-//		}
-//		
-//		return factorLst;
-		return null;
-	}
-	
-	@Override
-	public List<Group> getGroupListByScale(int scaleId) {
+		Connection conn = getConn();
+		Statement stmt = conn.createStatement();
 		
-		return null;
+		List<Factor> factorLst = new ArrayList<Factor>();
+		String sql = String.format("select factorId, name, formula from factor where scaleId = %d order by factorId", scaleId);
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+			Factor factor = new Factor();
+			factor.setFactorId(rs.getInt("factorId"));
+			factor.setName(rs.getString("name"));
+			factor.setFormula(rs.getString("formula"));
+			factorLst.add(factor);
+		}
+		
+		rs.close();
+		
+		List<Level> levelLst = new ArrayList<Level>();
+		sql = String.format("select factorId, levelId, description, advice from `level` where scaleId = %d order by factorId, levelId", scaleId);
+		rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+			Level level = new Level();
+			level.setFactorId(rs.getInt("factorId"));
+			level.setLevelId(rs.getInt("levelId"));
+			level.setDescription(rs.getString("description"));
+			level.setAdvice(rs.getString("advice"));
+			levelLst.add(level);
+		}
+		
+		rs.close();
+		
+		for (Factor factor : factorLst) {
+			List<Level> lst = new ArrayList<Level>();
+			factor.setLevelList(lst);
+			int len = levelLst.size();
+			for(int i = len - 1; i >= 0; i--) {
+				Level level = levelLst.get(i);
+				if (factor.getFactorId() == level.getFactorId()) {
+					lst.add(level);
+					levelLst.remove(level);
+				}
+			}
+		}
+		
+		return factorLst;
 	}
 	
 	@Override
-	public List<Relation> getRelationByScale(int scaleId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Group> getGroupListByScale(int scaleId) throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		Statement stmt = conn.createStatement();
+		
+		List<Group> groupLst = new ArrayList<Group>();
+		String sql = String.format("select groupId, name, formula from `Group` where scaleId = %d order by groupId", scaleId);
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+			Group group = new Group();
+			group.setGroupId(rs.getInt("groupId"));
+			group.setName(rs.getString("name"));
+			group.setFormula(rs.getString("formula"));
+			groupLst.add(group);
+		}
+		
+		rs.close();
+		
+		return groupLst;
+	}
+	
+	@Override
+	public List<Relation> getRelationByScale(int scaleId) throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		Statement stmt = conn.createStatement();
+		
+		List<Relation> relationLst = new ArrayList<Relation>();
+		String sql = String.format("select factorId, groupId, points from Relation where scaleId = %d order by factorId, groupId", scaleId);
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+			Relation relation = new Relation();
+			relation.setFactorId(rs.getInt("factorId"));
+			relation.setGroupId(rs.getInt("groupId"));
+			relation.setPoints(rs.getString("points"));
+			relationLst.add(relation);
+		}
+		
+		rs.close();
+		
+		return relationLst;
+	}
+	
+	@Override
+	public int insertTesteeBase(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		Statement stmt = conn.createStatement();
+		
+		String sql = String.format("insert into Testeebase(scaleId, name, gender, testTime) values(%d, '%s', '%s', now())", 
+				scaleId,
+				data.getInfo().getName(), 
+				data.getInfo().getGender());
+		
+		stmt.execute(sql, Statement.RETURN_GENERATED_KEYS);
+		ResultSet rs = stmt.getGeneratedKeys();
+		rs.next();
+		int id = rs.getInt(1);
+		rs.close();
+		
+		return id;
+	}
+	
+	@Override
+	public void insertTesteePersonalInfo(int scaleId, int baseId, TesteeData data) throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		conn.setAutoCommit(false);
+		Statement stmt = conn.createStatement();
+		
+		String userName = data.getInfo().getName();
+		for(InfoItem item : data.getInfo().getItems()) {
+			String sql = String.format("insert into TesteePersonalInfo(scaleId, baseId, userName, name, title, content) values(%d, %d, '%s', '%s', '%s', '%s')",
+					scaleId,
+					baseId,
+					userName,
+					item.getName(),
+					item.getTitle(),
+					item.getContent());
+			stmt.addBatch(sql);
+		}
+		int[] rs = stmt.executeBatch();		
+		conn.commit();
+		conn.setAutoCommit(true);
+	}
+	
+	@Override
+	public void insertTesteeData(int scaleId, int baseId, TesteeData data) throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		Statement stmt = conn.createStatement();
+		
+		Collections.sort(data.getData().getItems());
+		
+		StringBuilder questionIds = new StringBuilder(); 
+		StringBuilder optionSelected = new StringBuilder();
+		StringBuilder scoreSelected = new StringBuilder();
+		
+		for(OptionSelected selected : data.getData().getItems()) {
+			questionIds.append(selected.getQuestionId() + ",");
+			optionSelected.append(selected.getOptionId() + ",");
+			scoreSelected.append(selected.getScore() + ",");
+		}
+		
+		String sql = String.format("insert into TesteeData(scaleId, baseId, questionIds, optionSelected, ScoreSelected) values(%d, %d, '%s', '%s', '%s')", 
+				scaleId,
+				baseId,
+				questionIds.toString(),
+				optionSelected.toString(),
+				scoreSelected.toString());
+		
+		stmt.execute(sql);
+	}
+	
+	@Override
+	public void insertResultBase(int scaleId, int testeeBaseId, Result result)
+			throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		String sql = "insert into ResultBase(scaleId, testeeBaseId, `groups`) values(?, ?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		StringBuilder groups = new StringBuilder();
+		for(String group : result.getGroupLst()) {
+			groups.append(group + ",");
+		}
+		
+		pstmt.setInt(1, scaleId);
+		pstmt.setInt(2, testeeBaseId);
+		pstmt.setString(3, groups.toString());		
+		
+		pstmt.execute();
+	}
+	
+	@Override
+	public void insertResultFactor(int scaleId, int testeeBaseId, Result result)
+			throws ClassNotFoundException, SQLException {
+		Connection conn = getConn();
+		conn.setAutoCommit(false);
+		String sql = "insert into ResultFactor(scaleId, factorId, testeeBaseId, name, description, advice) values(?, ?, ?, ?, ?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		for(FactorResult fr : result.getItems()) {
+			pstmt.setInt(1, scaleId);
+			pstmt.setInt(2,  fr.getFactorId());
+			pstmt.setInt(3,  testeeBaseId);
+			pstmt.setString(4, fr.getName());
+			if (fr.getDescription() != null) {
+				pstmt.setString(5, fr.getDescription());
+			} else {
+				pstmt.setNull(5, Types.VARCHAR);
+			}
+			
+			if (fr.getAdvice() != null) {
+				pstmt.setString(6, fr.getAdvice());
+			}else {
+				pstmt.setNull(6, Types.VARCHAR);
+			}
+			
+			pstmt.addBatch();
+		}
+		
+		pstmt.executeBatch();
+		conn.commit();
+		
+		conn.setAutoCommit(true);
 	}
 	
 	private Connection getConn() throws SQLException, ClassNotFoundException {

@@ -23,7 +23,7 @@ import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.Relation;
 import com.ziya05.entities.Result;
 import com.ziya05.entities.SelectedData;
-import com.ziya05.entities.UserHistoryData;
+import com.ziya05.entities.TesteeData;
 import com.ziya05.factories.ScaleDaoFactory;
 import com.ziya05.tools.Utils;
 
@@ -31,7 +31,7 @@ public class ScaleBo implements IScaleBo {
 	private IScaleDao dao = ScaleDaoFactory.createScaleDao();
 
 	@Override
-	public Result getResult(int scaleId, UserHistoryData data) throws ClassNotFoundException, SQLException, ScriptException {
+	public Result getResult(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException {
 		List<Factor> factorLst = dao.getFactorListByScale(scaleId);
 		List<Group> groupLst = dao.getGroupListByScale(scaleId);
 		List<Relation> relationLst = dao.getRelationByScale(scaleId);
@@ -74,6 +74,8 @@ public class ScaleBo implements IScaleBo {
 			}
 		}
 		
+		Collections.sort(groupIdLst);
+		
 		
 		Result result = new Result();
 		List<FactorResult> factorResultLst = new ArrayList<FactorResult>();
@@ -84,7 +86,7 @@ public class ScaleBo implements IScaleBo {
 		}
 		
 		for(Relation relation : relationLst) {
-			if(groupIdLst.contains(relation.getGroundId())) {
+			if(groupIdLst.contains(relation.getGroupId())) {
 				int levelId = this.getLevelId(relation.getFactorId(), relation.getPoints(), factorScoreLst);
 				
 				for(Factor factor : factorLst) {
@@ -105,6 +107,7 @@ public class ScaleBo implements IScaleBo {
 		FactorResult factorResult = new FactorResult();
 		for(Level level : factor.getLevelList()) {
 			if (levelId == level.getLevelId()) {
+				factorResult.setFactorId(factor.getFactorId());
 				factorResult.setName(factor.getName());
 				factorResult.setDescription(level.getDescription());
 				factorResult.setAdvice(level.getAdvice());
@@ -123,7 +126,7 @@ public class ScaleBo implements IScaleBo {
 				List<Double> pointLst = this.getPointLst(points);
 				 
 				for(int i=0; i < pointLst.size(); i++) {
-					if(pointLst.get(i) > fs.getScore()) {
+					if(pointLst.get(i) >= fs.getScore()) { // 例如： 临界值为5,6 -> 无穷小, 5] (5, 6] (6, 无穷到
 						level = i + 1;
 						break;
 					}
@@ -158,4 +161,21 @@ public class ScaleBo implements IScaleBo {
 	private double calcScore(String formula, Map<String, Object> map) throws ScriptException {
 		return new Double(Utils.evel(formula, map).toString());
 	}
+
+	@Override
+	public int saveTesteeData(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException {
+		int baseId = dao.insertTesteeBase(scaleId, data);
+		System.out.println(baseId);
+		dao.insertTesteePersonalInfo(scaleId, baseId, data);
+		dao.insertTesteeData(scaleId, baseId, data);
+		
+		return baseId;
+	}
+	
+	@Override
+	public void saveResult(int scaleId, int baseId, Result result) throws ClassNotFoundException, SQLException {
+		dao.insertResultBase(scaleId, baseId, result);
+		dao.insertResultFactor(scaleId, baseId, result);
+	}
+
 }
