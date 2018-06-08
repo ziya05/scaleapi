@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.naming.NamingException;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -31,7 +32,11 @@ import com.ziya05.tools.Projects;
 import com.ziya05.tools.Utils;
 
 public class ScaleBo implements IScaleBo {
-	private IScaleDao dao = ScaleDaoFactory.createScaleDao();
+	private IScaleDao dao = null;
+	
+	public ScaleBo() throws NamingException {
+		this.dao = ScaleDaoFactory.createScaleDao();
+	}
 
 	@Override
 	public Result getResult(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException {

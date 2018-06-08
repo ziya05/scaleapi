@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import com.ziya05.entities.Factor;
 import com.ziya05.entities.FactorResult;
 import com.ziya05.entities.Group;
@@ -26,6 +28,12 @@ import com.ziya05.entities.Scale;
 import com.ziya05.entities.TesteeData;
 
 public class ScaleDao implements IScaleDao {
+	private DataSource ds;
+	
+	public ScaleDao(DataSource ds) {
+		super();
+		this.ds = ds;
+	}
 
 	@Override
 	public List<Scale> getAllScales() throws ClassNotFoundException, SQLException {
@@ -365,11 +373,7 @@ public class ScaleDao implements IScaleDao {
 	}
 	
 	private Connection getConn() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		String url = "jdbc:mysql://localhost:3306/scale?characterEncoding=utf8&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-		Connection conn = DriverManager.getConnection(url, "scale", "scale-01");
-		
-		return conn;
+		return ds.getConnection();
 	}
 
 }

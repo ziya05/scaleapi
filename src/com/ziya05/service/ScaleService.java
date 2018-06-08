@@ -3,6 +3,7 @@ package com.ziya05.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.script.ScriptException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -27,7 +28,13 @@ import com.ziya05.factories.ScaleDaoFactory;
 @Path("/ScaleService") 
 public class ScaleService {
 	
-    IScaleDao dao = ScaleDaoFactory.createScaleDao();
+    IScaleDao dao = null;
+    
+    public ScaleService() throws NamingException {
+    	super();
+    	
+    	dao = ScaleDaoFactory.createScaleDao();
+    }
     
     @GET 
     @Path("/scales") 
@@ -57,7 +64,7 @@ public class ScaleService {
     @Path("/scale/result/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     @Consumes(MediaType.APPLICATION_JSON)
-    public void saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException {
+    public void saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException, NamingException {
     	Sleep();
     	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
     	int baseId = bo.saveTesteeData(id, data);
