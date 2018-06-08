@@ -93,12 +93,13 @@ public class ScaleDao implements IScaleDao {
 
 		List<Question> questionLst = new ArrayList<Question>();
 		scale.setItems(questionLst);
-		sql = String.format("select questionId, title from Question where scaleId = %d order by questionId", scaleId);
+		sql = String.format("select questionId, title, questionType from Question where scaleId = %d order by questionId", scaleId);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Question question = new Question();
 			question.setId(rs.getInt("questionId"));
 			question.setTitle(rs.getString("title"));
+			question.setQuestionType(rs.getInt("questionType"));
 			questionLst.add(question);
 			
 		}
@@ -235,16 +236,18 @@ public class ScaleDao implements IScaleDao {
 		Connection conn = getConn();
 		Statement stmt = conn.createStatement();
 		
-		String sql = String.format("insert into Testeebase(scaleId, name, gender, testTime) values(%d, '%s', '%s', now())", 
+		String sql = String.format("insert into Testeebase(scaleId, name, gender, age, testTime) values(%s, '%s', '%s', %f, now())", 
 				scaleId,
 				data.getInfo().getName(), 
-				data.getInfo().getGender());
+				data.getInfo().getGender(),
+				data.getInfo().getAge());
 		
 		stmt.execute(sql, Statement.RETURN_GENERATED_KEYS);
 		ResultSet rs = stmt.getGeneratedKeys();
 		rs.next();
 		int id = rs.getInt(1);
 		rs.close();
+		conn.close();
 		
 		return id;
 	}
@@ -269,6 +272,8 @@ public class ScaleDao implements IScaleDao {
 		int[] rs = stmt.executeBatch();		
 		conn.commit();
 		conn.setAutoCommit(true);
+		
+		conn.close();
 	}
 	
 	@Override
@@ -296,6 +301,7 @@ public class ScaleDao implements IScaleDao {
 				scoreSelected.toString());
 		
 		stmt.execute(sql);
+		conn.close();
 	}
 	
 	@Override
@@ -315,6 +321,8 @@ public class ScaleDao implements IScaleDao {
 		pstmt.setString(3, groups.toString());		
 		
 		pstmt.execute();
+		
+		conn.close();
 	}
 	
 	@Override
@@ -322,7 +330,7 @@ public class ScaleDao implements IScaleDao {
 			throws ClassNotFoundException, SQLException {
 		Connection conn = getConn();
 		conn.setAutoCommit(false);
-		String sql = "insert into ResultFactor(scaleId, factorId, testeeBaseId, name, description, advice) values(?, ?, ?, ?, ?, ?)";
+		String sql = "insert into ResultFactor(scaleId, factorId, testeeBaseId, name, score, levelId, description, advice) values(?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		for(FactorResult fr : result.getItems()) {
@@ -330,16 +338,19 @@ public class ScaleDao implements IScaleDao {
 			pstmt.setInt(2,  fr.getFactorId());
 			pstmt.setInt(3,  testeeBaseId);
 			pstmt.setString(4, fr.getName());
+			pstmt.setDouble(5, fr.getScore());
+			pstmt.setInt(6, fr.getLevelId());
+			
 			if (fr.getDescription() != null) {
-				pstmt.setString(5, fr.getDescription());
+				pstmt.setString(7, fr.getDescription());
 			} else {
-				pstmt.setNull(5, Types.VARCHAR);
+				pstmt.setNull(7, Types.VARCHAR);
 			}
 			
 			if (fr.getAdvice() != null) {
-				pstmt.setString(6, fr.getAdvice());
+				pstmt.setString(8, fr.getAdvice());
 			}else {
-				pstmt.setNull(6, Types.VARCHAR);
+				pstmt.setNull(8, Types.VARCHAR);
 			}
 			
 			pstmt.addBatch();
@@ -349,6 +360,8 @@ public class ScaleDao implements IScaleDao {
 		conn.commit();
 		
 		conn.setAutoCommit(true);
+		
+		conn.close();
 	}
 	
 	private Connection getConn() throws SQLException, ClassNotFoundException {

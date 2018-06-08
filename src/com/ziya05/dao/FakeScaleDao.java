@@ -22,16 +22,16 @@ public class FakeScaleDao implements IScaleDao {
 	public List<Scale> getAllScales() {
 		List<Scale> scales = new ArrayList<Scale>();
 		
-		scales.add(new Scale(1, "²âÒ»²âÄãµÄÖÇÉÌÁ¿±í", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(3, "¾ÅÐÍÈË¸ñ²âÊÔÁ¿±í", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(4, "ÄãÃ¿¸öÔÂ×¬¶àÉÙÇ®Á¿±í", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(5, "¿´¿´Äã»¹ÄÜ»î¼¸ÄêÁ¿±í", "ÐÄÀíÑ§ÊÇÒ»ÃÅÑÐ¾¿ÈËÀàÐÄÀíÏÖÏó¼°ÆäÓ°ÏìÏÂµÄ¾«Éñ¹¦ÄÜºÍÐÐÎª»î¶¯µÄ¿ÆÑ§£¬¼æ¹ËÍ»³öµÄÀíÂÛÐÔºÍÓ¦ÓÃ£¨Êµ¼ù£©ÐÔ¡£ ÐÄÀíÑ§°üÀ¨»ù´¡ÐÄÀíÑ§ÓëÓ¦ÓÃÐÄÀíÑ§Á½´óÁìÓò£¬ÆäÑÐ¾¿Éæ¼°Öª¾õ¡¢ÈÏÖª¡¢ÇéÐ÷¡¢Ë¼Î¬¡¢ÈË¸ñ¡¢ÐÐÎªÏ°¹ß¡¢ÈË¼Ê¹ØÏµ¡¢Éç»á¹ØÏµµÈÐí¶àÁìÓò£¬Ò²ÓëÈÕ³£Éú»îµÄÐí¶àÁìÓò¡ª¡ª¼ÒÍ¥¡¢½ÌÓý¡¢½¡¿µ¡¢Éç»áµÈ·¢Éú¹ØÁª¡£"));
-		scales.add(new Scale(6, "Âê¸ñÀûÌØÆÕÀ­Ë¹¼°Á¿±í", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(7, "rangerÁ¿±í", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(8, "Ëµ³öÄãµÄ¹ÊÊÂ", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(9, "ÈË¹íÇéÎ´ÁË", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(10, "Ã¿Ìì³ÔÉ¶Á¿±í", "ÕâÊÇÒ»¸ö²âÊÔÖÇÉÌµÄÁ¿±í£¬ ×÷ÕßÊÇµ±´úÐÄÀíÑ§´óÊ¦Ä³Ä³Ä³"));
-		scales.add(new Scale(11, "ÊÔÊÔÌØÊâ×Ö·û", "ÕâÓÐ¸ö\"µÄºÍ[]djÊ«¸èÉ¶{ÎªÊ²Ã´}ÎÒÒ²²»ÊÇµ½, ÕâÊÇ¸öÊ²Ã´"));
+		scales.add(new Scale(1, "ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(3, "ï¿½ï¿½ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(4, "ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½×¬ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(5, "ï¿½ï¿½ï¿½ï¿½ï¿½ã»¹ï¿½Ü»î¼¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ÂµÄ¾ï¿½ï¿½ï¿½ï¿½Üºï¿½ï¿½ï¿½Îªï¿½î¶¯ï¿½Ä¿ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½Ó¦ï¿½Ã£ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½æ¼°Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼Î¬ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½ÎªÏ°ï¿½ß¡ï¿½ï¿½Ë¼Ê¹ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¡ª¡ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
+		scales.add(new Scale(6, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(7, "rangerï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(8, "Ëµï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(9, "ï¿½Ë¹ï¿½ï¿½ï¿½Î´ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(10, "Ã¿ï¿½ï¿½ï¿½É¶ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ê¦Ä³Ä³Ä³"));
+		scales.add(new Scale(11, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½", "ï¿½ï¿½ï¿½Ð¸ï¿½\"ï¿½Äºï¿½[]djÊ«ï¿½ï¿½É¶{ÎªÊ²Ã´}ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Çµï¿½, ï¿½ï¿½ï¿½Ç¸ï¿½Ê²Ã´"));
 		
 		return scales;
 	}
@@ -40,10 +40,10 @@ public class FakeScaleDao implements IScaleDao {
 	public PersonalInfo getPersonalInfoByScaleId(int id) {
 		PersonalInfo info = new PersonalInfo();
 		info.setItems(new ArrayList<InfoItem>() {{
-			add(new InfoItem("school", "±ÏÒµÔºÐ£"));
+			add(new InfoItem("school", "ï¿½ï¿½ÒµÔºÐ£"));
 			add(new InfoItem("major", "×¨Òµ"));
-			add(new InfoItem("hobby", "ÐËÈ¤°®ºÃ"));
-			add(new InfoItem("age", "ÄêÁä"));
+			add(new InfoItem("hobby", "ï¿½ï¿½È¤ï¿½ï¿½ï¿½ï¿½"));
+			add(new InfoItem("age", "ï¿½ï¿½ï¿½ï¿½"));
 		}});
 		
 		return info;
@@ -53,19 +53,19 @@ public class FakeScaleDao implements IScaleDao {
 	public Scale getScaleByScaleId(int id) {
 		List<Question> questionLst = new ArrayList();
 		
-		questionLst.add(new Question(1, "Äã½ÐÊ²Ã´£¿", getOptionList()));
-		questionLst.add(new Question(2, "Äã¶ÔÓÚ¹·ÔõÃ´¿´£¿", getOptionList2()));
-		questionLst.add(new Question(3, "ÄãÃ¿Ìì³ÔÔç²ÍÃ´£¿", getOptionList3(6)));
-		questionLst.add(new Question(4, "¹þ¹þ¹þ¹þ£¿", getOptionList2()));
-		questionLst.add(new Question(5, "×ßÁËÒ»Â·ÁË£¬ Ê²Ã´¶¼Ã»ÓÐ¿´¼û£¬ ÄñÊÇ¼ûµ½ÁË£¬ Ê÷Ò²¼ûµ½ÁË£¬Óã¶¼¼ûµ½ÁË£¬Ö»ÊÇÃ»¼ûµ½Ëý£¬¾ÍÊ²Ã´¶¼Ã»¼ûµ½£¿", getOptionList3(8)));
-		questionLst.add(new Question(6, "·½·¨×¢ÊÍ±ØÐëÐ´ÔÚ·½·¨¶¨ÒåÖ®Ç°¡£¸Ã×¢ÊÍ°üÀ¨£º·½·¨Æä¹¦ÄÜµÄ¼òµ¥ ÃèÊö£¬·½·¨µÄ²Î£¿", getOptionList2()));
-		questionLst.add(new Question(7, "What do you think about shit£¿", getOptionList()));
-		questionLst.add(new Question(8, "Äã¶öÁËÃ´£¿", getOptionList2()));
-		questionLst.add(new Question(9, "Äã¿ÊÁËÃ´£¿", getOptionList()));
+		questionLst.add(new Question(1, "ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½", 1, getOptionList()));
+		questionLst.add(new Question(2, "ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½", 1, getOptionList2()));
+		questionLst.add(new Question(3, "ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½", 1, getOptionList3(6)));
+		questionLst.add(new Question(4, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 1, getOptionList2()));
+		questionLst.add(new Question(5, "ï¿½ï¿½ï¿½ï¿½Ò»Â·ï¿½Ë£ï¿½ Ê²Ã´ï¿½ï¿½Ã»ï¿½Ð¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ã¶¼ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½Ö»ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 1, getOptionList3(8)));
+		questionLst.add(new Question(6, "ï¿½ï¿½ï¿½ï¿½×¢ï¿½Í±ï¿½ï¿½ï¿½Ð´ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½×¢ï¿½Í°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä¹¦ï¿½ÜµÄ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²Î£ï¿½", 1, getOptionList2()));
+		questionLst.add(new Question(7, "What do you think about shitï¿½ï¿½", 1, getOptionList()));
+		questionLst.add(new Question(8, "ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½", 1, getOptionList2()));
+		questionLst.add(new Question(9, "ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½", 1, getOptionList()));
 		
 		return new Scale(4, 
-				"¿´¿´Äã»¹ÄÜ»î¼¸ÄêÁ¿±í", 
-				id + ":ÐÄÀíÑ§ÊÇÒ»ÃÅÑÐ¾¿ÈËÀàÐÄÀíÏÖÏó¼°ÆäÓ°ÏìÏÂµÄ¾«Éñ¹¦ÄÜºÍÐÐÎª»î¶¯µÄ¿ÆÑ§£¬¼æ¹ËÍ»³öµÄÀíÂÛÐÔºÍÓ¦ÓÃ£¨Êµ¼ù£©ÐÔ¡£ ÐÄÀíÑ§°üÀ¨»ù´¡ÐÄÀíÑ§ÓëÓ¦ÓÃÐÄÀíÑ§Á½´óÁìÓò£¬ÆäÑÐ¾¿Éæ¼°Öª¾õ¡¢ÈÏÖª¡¢ÇéÐ÷¡¢Ë¼Î¬¡¢ÈË¸ñ¡¢ÐÐÎªÏ°¹ß¡¢ÈË¼Ê¹ØÏµ¡¢Éç»á¹ØÏµµÈÐí¶àÁìÓò£¬Ò²ÓëÈÕ³£Éú»îµÄÐí¶àÁìÓò¡ª¡ª¼ÒÍ¥¡¢½ÌÓý¡¢½¡¿µ¡¢Éç»áµÈ·¢Éú¹ØÁª¡£", 
+				"ï¿½ï¿½ï¿½ï¿½ï¿½ã»¹ï¿½Ü»î¼¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 
+				id + ":ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ÂµÄ¾ï¿½ï¿½ï¿½ï¿½Üºï¿½ï¿½ï¿½Îªï¿½î¶¯ï¿½Ä¿ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½Ó¦ï¿½Ã£ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½æ¼°Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼Î¬ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½ÎªÏ°ï¿½ß¡ï¿½ï¿½Ë¼Ê¹ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¡ª¡ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 
 				questionLst);
 	}
 	
@@ -75,40 +75,40 @@ public class FakeScaleDao implements IScaleDao {
 		
 		Factor factor1 = new Factor();
 		factor1.setFactorId(1);
-		factor1.setName("ÈÎÐÔ³Ì¶È");
+		factor1.setName("ï¿½ï¿½ï¿½Ô³Ì¶ï¿½");
 		factor1.setFormula("Q1+Q2+Q5");
 
 		factor1.setLevelList(new ArrayList() {{
-			add(new Level(1, 1, "²»Õ¦ÈÎÐÔ", "ÄãÊÇÒ»¸ö²»Õ¦ÈÎÐÔµÄÈË£¬¼á³ÖÕâ¸öÐÔ¸ñ£¬¶ÔÄãÃ»ºÃ´¦£¡"));
-			add(new Level(1, 2, "ÓÐµãÈÎÐÔ", "ÄãÊÇÒ»¸öÓÐµãÈÎÐÔµÄÈË£¬ ¹þ¹þ¹þ¹þ"));
-			add(new Level(1, 3, "ÌØ±ðÈÎÐÔ", "ÄãÌ«ÈÎÐÔÁË£¬ ÕæÊÇÒ»¸ö²»Öª»Ú¸ÄµÄÉµµ°£¡"));
-			add(new Level(1, 4, "ÓÐµã×÷ÁË", "ÄãÕ¦ÄÜÈç´ËµØÈÎÐÔ£¬ ÎÒ²»¶®£¡"));
+			add(new Level(1, 1, "ï¿½ï¿½Õ¦ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Õ¦ï¿½ï¿½ï¿½Ôµï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸ñ£¬¶ï¿½ï¿½ï¿½Ã»ï¿½Ã´ï¿½ï¿½ï¿½"));
+			add(new Level(1, 2, "ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½Ë£ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
+			add(new Level(1, 3, "ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½Ì«ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Öªï¿½Ú¸Äµï¿½Éµï¿½ï¿½ï¿½ï¿½"));
+			add(new Level(1, 4, "ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½Õ¦ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½Ô£ï¿½ ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½"));
 		}});
 		lst.add(factor1);
 		
 		
 		Factor factor2 = new Factor();
 		factor2.setFactorId(2);
-		factor2.setName("°Ü¼Ò³Ì¶È");
+		factor2.setName("ï¿½Ü¼Ò³Ì¶ï¿½");
 		factor2.setFormula("if (Q3 == 2) {Q4} else {Q7}"); 
 
 		factor2.setLevelList(new ArrayList() {{
-			add(new Level(2, 1, "²»Õ¦°Ü¼Ò", "¿Ï¶¨ÊÇÕõÇ®ÉÙ£¡£¡£¡"));
-			add(new Level(2, 2, "Òà°Ü¼Ò£¬Òà²»°Ü¼Ò", "²»ÖªµÀ¸ÃËµÉ¶£¬´Ë¿ÌµÄÊÀ½çÊÇÈç´ËµÄÃìÐ¡£¡"));
-			add(new Level(2, 3, "·Ç³£°Ü¼Ò", "¹ö£¡"));
+			add(new Level(2, 1, "ï¿½ï¿½Õ¦ï¿½Ü¼ï¿½", "ï¿½Ï¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç®ï¿½Ù£ï¿½ï¿½ï¿½ï¿½ï¿½"));
+			add(new Level(2, 2, "ï¿½ï¿½Ü¼Ò£ï¿½ï¿½à²»ï¿½Ü¼ï¿½", "ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ËµÉ¶ï¿½ï¿½ï¿½Ë¿Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½Ð¡ï¿½ï¿½"));
+			add(new Level(2, 3, "ï¿½Ç³ï¿½ï¿½Ü¼ï¿½", "ï¿½ï¿½ï¿½ï¿½"));
 		}});
 		lst.add(factor2);
 		
 		Factor factor3 = new Factor();
 		factor3.setFactorId(3);
-		factor3.setName("ÖÇÉÌ");
+		factor3.setName("ï¿½ï¿½ï¿½ï¿½");
 		factor3.setFormula("Q3 + Q4 + Q7");
 
 		factor3.setLevelList(new ArrayList() {{
-			add(new Level(3, 1, "ÓÞ´ÀµÄÈËÀà", "¿ìÈ¥×ÔÎÒ»ÙÃð°É£¡"));
-			add(new Level(3, 2, "²»ÓÞ´À£¬Ö»ÊÇ°×³Õ", "(£þ¨Œ£þ)\""));
-			add(new Level(3, 3, "Ò»°ãÈË¶ù", "¾ÍÊÇÒ»°ãÈË¶ù£¬ Ò»°ãµØÈË¶ù°¡¡£¡£¡£¡£"));
-			add(new Level(3, 4, "ÈË¾«", "½¨¹úºó²»Ðí³É¾«£¡"));
+			add(new Level(3, 1, "ï¿½Þ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½È¥ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½É£ï¿½"));
+			add(new Level(3, 2, "ï¿½ï¿½ï¿½Þ´ï¿½ï¿½ï¿½Ö»ï¿½Ç°×³ï¿½", "(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)\""));
+			add(new Level(3, 3, "Ò»ï¿½ï¿½ï¿½Ë¶ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ Ò»ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
+			add(new Level(3, 4, "ï¿½Ë¾ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½"));
 		}});
 		lst.add(factor3);
 		
@@ -118,11 +118,11 @@ public class FakeScaleDao implements IScaleDao {
 	private List<Option> getOptionList(){
 		List<Option> lst = new ArrayList();
 		
-		lst.add(new Option("A", "ÊÇ", 1));
-		lst.add(new Option("B", "²»ÊÇ", 2));
-		lst.add(new Option("C", "²»ºÃËµ", 3));
-		lst.add(new Option("D", "ÒªÔõÑùÀ²", 4));
-		lst.add(new Option("E", "²»ÀíÄãÁËÀ²", 5));
+		lst.add(new Option("A", "ï¿½ï¿½", 1));
+		lst.add(new Option("B", "ï¿½ï¿½ï¿½ï¿½", 2));
+		lst.add(new Option("C", "ï¿½ï¿½ï¿½ï¿½Ëµ", 3));
+		lst.add(new Option("D", "Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 4));
+		lst.add(new Option("E", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 5));
 		
 		return lst;
 	}
@@ -130,9 +130,9 @@ public class FakeScaleDao implements IScaleDao {
 	private List<Option> getOptionList2() {
 		List<Option> lst = new ArrayList();
 		
-		lst.add(new Option("A", "Ëæ±ãÀ²", 2));
-		lst.add(new Option("B", "³ÔÊºÀ²", 4));
-		lst.add(new Option("C", "²»ÒªÂï", 6));
+		lst.add(new Option("A", "ï¿½ï¿½ï¿½ï¿½ï¿½", 2));
+		lst.add(new Option("B", "ï¿½ï¿½Êºï¿½ï¿½", 4));
+		lst.add(new Option("C", "ï¿½ï¿½Òªï¿½ï¿½", 6));
 		
 		return lst;
 	}
@@ -140,10 +140,10 @@ public class FakeScaleDao implements IScaleDao {
 	private List<Option> getOptionList3(int nextId){
 		List<Option> lst = new ArrayList();
 		
-		lst.add(new Option("A", "ÊÇ", 1));
-		lst.add(new Option("B", "²»ÊÇ", 2));
-		lst.add(new Option("C", "µãÎÒ»áÌø×ªµ½£º" + nextId, 3, nextId));
-		lst.add(new Option("D", "ÒªÔõÑùÀ²", 4));
+		lst.add(new Option("A", "ï¿½ï¿½", 1));
+		lst.add(new Option("B", "ï¿½ï¿½ï¿½ï¿½", 2));
+		lst.add(new Option("C", "ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½" + nextId, 3, nextId));
+		lst.add(new Option("D", "Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 4));
 		
 		return lst;
 	}
@@ -152,12 +152,12 @@ public class FakeScaleDao implements IScaleDao {
 	public List<Group> getGroupListByScale(int scaleId) {
 		List<Group> lst = new ArrayList<Group>();	
 		
-		lst.add(new Group(1, "ÄÐÍÞÍÞ", "ÐÔ±ð=='ÄÐ' && ÄêÁä < 10"));
-		lst.add(new Group(2, "Å®ÍÞÍÞ", "ÐÔ±ð=='Å®' && ÄêÁä < 10"));
-		lst.add(new Group(3, "ÄÐÇàÄê", "ÐÔ±ð=='ÄÐ' && ÄêÁä >= 10 && ÄêÁä < 40"));
-		lst.add(new Group(4, "Å®ÇàÄê", "ÐÔ±ð=='Å®' && ÄêÁä >= 10 && ÄêÁä < 35"));
-		lst.add(new Group(5, "ÆäËûÈË", "(ÐÔ±ð=='ÄÐ' && ÄêÁä >= 40) || (ÐÔ±ð == 'Å®' && ÄêÁä >= 35)"));
-		lst.add(new Group(6, "È«Ìå", "1==1"));
+		lst.add(new Group(1, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½Ô±ï¿½=='ï¿½ï¿½' && ï¿½ï¿½ï¿½ï¿½ < 10"));
+		lst.add(new Group(2, "Å®ï¿½ï¿½ï¿½ï¿½", "ï¿½Ô±ï¿½=='Å®' && ï¿½ï¿½ï¿½ï¿½ < 10"));
+		lst.add(new Group(3, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½Ô±ï¿½=='ï¿½ï¿½' && ï¿½ï¿½ï¿½ï¿½ >= 10 && ï¿½ï¿½ï¿½ï¿½ < 40"));
+		lst.add(new Group(4, "Å®ï¿½ï¿½ï¿½ï¿½", "ï¿½Ô±ï¿½=='Å®' && ï¿½ï¿½ï¿½ï¿½ >= 10 && ï¿½ï¿½ï¿½ï¿½ < 35"));
+		lst.add(new Group(5, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "(ï¿½Ô±ï¿½=='ï¿½ï¿½' && ï¿½ï¿½ï¿½ï¿½ >= 40) || (ï¿½Ô±ï¿½ == 'Å®' && ï¿½ï¿½ï¿½ï¿½ >= 35)"));
+		lst.add(new Group(6, "È«ï¿½ï¿½", "1==1"));
 		
 		
 		

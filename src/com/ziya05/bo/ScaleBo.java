@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -25,6 +27,7 @@ import com.ziya05.entities.Result;
 import com.ziya05.entities.SelectedData;
 import com.ziya05.entities.TesteeData;
 import com.ziya05.factories.ScaleDaoFactory;
+import com.ziya05.tools.Projects;
 import com.ziya05.tools.Utils;
 
 public class ScaleBo implements IScaleBo {
@@ -36,8 +39,34 @@ public class ScaleBo implements IScaleBo {
 		List<Group> groupLst = dao.getGroupListByScale(scaleId);
 		List<Relation> relationLst = dao.getRelationByScale(scaleId);
 		
+		//确定所属团体
+		Map<String, Object> map = this.loadPersonalInfo(null, data);
+		
+		List<Integer> groupIdLst = new ArrayList<Integer>();
+		int groupLen = groupLst.size();
+		for(int i = groupLen-1; i >= 0; i--) {
+			Group group = groupLst.get(i);
+			if(!isGroup(group.getFormula(), map)) {
+				groupLst.remove(i);
+			} else {
+				groupIdLst.add(group.getGroupId());
+			}
+		}
+		
+		Collections.sort(groupIdLst);	
+		
+		//初始化因子结果相关对象
+		Result result = new Result();
+		List<FactorResult> factorResultLst = new ArrayList<FactorResult>();
+		result.setItems(factorResultLst);
+		result.setGroupLst(new ArrayList<String>());
+		for(Group group : groupLst) {
+			result.getGroupLst().add(group.getName());
+		}
+		
+		//计算因子分
 		List<OptionSelected> osLst = data.getData().getItems();
-		Map<String, Object> map = new HashMap<String, Object>();
+		map = this.loadPersonalInfo(null, data);
 		for(OptionSelected os : osLst) {
 
 			map.put("Q"+os.getQuestionId(), (Object)os.getScore());
@@ -54,49 +83,20 @@ public class ScaleBo implements IScaleBo {
 			factorScoreLst.add(factorScore);
 			
 			System.out.println("factorscore---------" + factor.getFactorId() + " : " + score);
-		}
-		
-		map = new HashMap<String, Object>();
-		map.put("�Ա�", data.getInfo().getGender());
-		for(InfoItem item : data.getInfo().getItems()) {
-			map.put(item.getTitle(), item.getContent());
-		}
-		
-		
-		List<Integer> groupIdLst = new ArrayList<Integer>();
-		int groupLen = groupLst.size();
-		for(int i = groupLen-1; i >= 0; i--) {
-			Group group = groupLst.get(i);
-			if(!isGroup(group.getFormula(), map)) {
-				groupLst.remove(i);
-			} else {
-				groupIdLst.add(group.getGroupId());
-			}
-		}
-		
-		Collections.sort(groupIdLst);
-		
-		
-		Result result = new Result();
-		List<FactorResult> factorResultLst = new ArrayList<FactorResult>();
-		result.setItems(factorResultLst);
-		result.setGroupLst(new ArrayList<String>());
-		for(Group group : groupLst) {
-			result.getGroupLst().add(group.getName());
-		}
-		
-		for(Relation relation : relationLst) {
-			if(groupIdLst.contains(relation.getGroupId())) {
-				int levelId = this.getLevelId(relation.getFactorId(), relation.getPoints(), factorScoreLst);
-				
-				for(Factor factor : factorLst) {
-					if(factor.getFactorId() == relation.getFactorId()) {
-						FactorResult factorResult = this.getFactorResult(levelId, factor);
-						factorResultLst.add(factorResult);
-						break;
-					}
+			
+			//确定等级、解释及建议信息
+			for(Relation relation : relationLst) {
+				if(groupIdLst.contains(relation.getGroupId())
+						&& factor.getFactorId() == relation.getFactorId()) {
+					int levelId = this.getLevelId(relation.getFactorId(), relation.getPoints(), factorScoreLst);
+					FactorResult factorResult = this.getFactorResult(levelId, factor);
+					factorResult.setScore(score);
+					factorResultLst.add(factorResult);
+					
+					map.put("LEVEL_F" + factor.getFactorId(), levelId);
+					
+					break; // 某个人，某个因子应该只有一个结果， 不考虑一个人属于多个团体， 每个团体都对应了同一个因子的情况
 				}
-				
 			}
 		}
 
@@ -109,6 +109,7 @@ public class ScaleBo implements IScaleBo {
 			if (levelId == level.getLevelId()) {
 				factorResult.setFactorId(factor.getFactorId());
 				factorResult.setName(factor.getName());
+				factorResult.setLevelId(levelId);
 				factorResult.setDescription(level.getDescription());
 				factorResult.setAdvice(level.getAdvice());
 				break;
@@ -126,7 +127,7 @@ public class ScaleBo implements IScaleBo {
 				List<Double> pointLst = this.getPointLst(points);
 				 
 				for(int i=0; i < pointLst.size(); i++) {
-					if(pointLst.get(i) >= fs.getScore()) { // ���磺 �ٽ�ֵΪ5,6 -> ����С, 5] (5, 6] (6, ���
+					if(pointLst.get(i) >= fs.getScore()) { // ���磺 �ٽ�ֵΪ5,6 -> ����С, 5] (5, 6] (6, ���
 						level = i + 1;
 						break;
 					}
@@ -159,9 +160,72 @@ public class ScaleBo implements IScaleBo {
 	}
 
 	private double calcScore(String formula, Map<String, Object> map) throws ScriptException {
-		return new Double(Utils.evel(formula, map).toString());
+		return new Double(Utils.evel(convertFormula(formula), map, Projects.getFactorFunctionLst()).toString());
+	}
+	
+	private String convertFormula(String formula) {
+		StringBuffer result = new StringBuffer();
+		Pattern pattern = Pattern.compile("isMax\\((.*?)\\|(.*?)\\)");
+		
+		Matcher matcher = pattern.matcher(formula);
+		while(matcher.find()) {
+			matcher.appendReplacement(result, convertIsMax(matcher));
+		}
+		
+		matcher.appendTail(result);
+		
+		return result.toString();
+	}
+	
+	private String convertIsMax(Matcher m) {
+		String data = m.group(1);
+		String[] range = data.split(":");
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("isMax([");
+		
+		Pattern pattern = Pattern.compile("([a-zA-Z]*)([0-9]*)");
+		
+		Matcher m1 = pattern.matcher(range[0]);
+		m1.find();
+		
+		String prefix = m1.group(1);
+		int begin = new Integer(m1.group(2));
+		
+		Matcher m2 = pattern.matcher(range[1]);
+		m2.find();
+		int end = new Integer(m2.group(2));
+		
+		for(int i = begin; i <= end; i++) {
+			sb.append(prefix + i);
+			if (i != end) {
+				sb.append(",");
+			}
+		}
+		
+		sb.append("],");
+		sb.append("[" + m.group(2) + "])");
+		
+		return sb.toString();
 	}
 
+	private Map<String, Object> loadPersonalInfo(HashMap<String, Object> map,
+			TesteeData data) {
+		if (map == null) {
+			map = new HashMap<String, Object>();
+		}
+		
+		map.put("性别", data.getInfo().getGender());
+		map.put("年龄", data.getInfo().getAge());
+		
+		List<InfoItem> items = data.getInfo().getItems();
+		for (InfoItem item : items) {
+			map.put(item.getTitle(), item.getContent());
+		}
+		
+		return map;
+	}
+	
 	@Override
 	public int saveTesteeData(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException {
 		int baseId = dao.insertTesteeBase(scaleId, data);

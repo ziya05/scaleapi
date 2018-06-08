@@ -8,6 +8,7 @@ public class PersonalInfo  implements Serializable {
 	
 	private String name;
 	private String gender;
+	private double age;
 	
 	private List<InfoItem> items;
 
@@ -15,10 +16,11 @@ public class PersonalInfo  implements Serializable {
 		super();
 	}
 
-	public PersonalInfo(String name, String gender, List<InfoItem> items) {
+	public PersonalInfo(String name, String gender, double age, List<InfoItem> items) {
 		super();
 		this.name = name;
 		this.gender = gender;
+		this.age = age;
 		this.items = items;
 	}
 
@@ -36,6 +38,14 @@ public class PersonalInfo  implements Serializable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public double getAge() {
+		return age;
+	}
+
+	public void setAge(double age) {
+		this.age = age;
 	}
 
 	public List<InfoItem> getItems() {

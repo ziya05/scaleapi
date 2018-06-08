@@ -6,6 +6,8 @@ public class FactorResult implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private int factorId;
 	private String name;
+	private double score;
+	private int levelId;
 	private String description;
 	private String advice;
 	
@@ -13,10 +15,12 @@ public class FactorResult implements Serializable {
 		super();
 	}
 
-	public FactorResult(int factorId, String name, String description, String advice) {
+	public FactorResult(int factorId, String name, double score, int levelId, String description, String advice) {
 		super();
 		this.factorId = factorId;
 		this.name = name;
+		this.score = score;
+		this.levelId = levelId;
 		this.description = description;
 		this.advice = advice;
 	}
@@ -52,4 +56,22 @@ public class FactorResult implements Serializable {
 	public void setAdvice(String advice) {
 		this.advice = advice;
 	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+	public int getLevelId() {
+		return levelId;
+	}
+
+	public void setLevelId(int levelId) {
+		this.levelId = levelId;
+	}
+	
+	
 }

@@ -7,14 +7,16 @@ public class Question implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private int id;
 	private String title;
+	private int questionType;
 	private List<Option> items;
 	
 	public Question() {}
-	public Question(int id, String title, List<Option> items) {
+	public Question(int id, String title, int questionType, List<Option> items) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.items = items;
+		this.questionType = questionType;
 	}
 	public int getId() {
 		return id;
@@ -33,6 +35,12 @@ public class Question implements Serializable {
 	}
 	public void setItems(List<Option> items) {
 		this.items = items;
+	}
+	public int getQuestionType() {
+		return questionType;
+	}
+	public void setQuestionType(int questionType) {
+		this.questionType = questionType;
 	}
 
 	
