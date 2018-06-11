@@ -40,10 +40,10 @@ public class FakeScaleDao implements IScaleDao {
 	public PersonalInfo getPersonalInfoByScaleId(int id) {
 		PersonalInfo info = new PersonalInfo();
 		info.setItems(new ArrayList<InfoItem>() {{
-			add(new InfoItem("school", "��ҵԺУ"));
-			add(new InfoItem("major", "רҵ"));
-			add(new InfoItem("hobby", "��Ȥ����"));
-			add(new InfoItem("age", "����"));
+			add(new InfoItem("school", "��ҵԺУ", 1, null));
+			add(new InfoItem("major", "רҵ", 1, null));
+			add(new InfoItem("hobby", "��Ȥ����", 1, null));
+			add(new InfoItem("age", "����", 1, null));
 		}});
 		
 		return info;

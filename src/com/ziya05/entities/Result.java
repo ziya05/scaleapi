@@ -8,7 +8,7 @@ public class Result implements Serializable {
 	private String description;
 	private TesteeData data;
 	private List<String> groupLst;
-	
+
 	private List<FactorResult> items;
 
 	public Result() {
@@ -54,4 +54,5 @@ public class Result implements Serializable {
 	public void setGroupLst(List<String> groupLst) {
 		this.groupLst = groupLst;
 	}
+
 }

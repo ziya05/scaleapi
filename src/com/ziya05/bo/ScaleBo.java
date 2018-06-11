@@ -44,9 +44,11 @@ public class ScaleBo implements IScaleBo {
 		List<Group> groupLst = dao.getGroupListByScale(scaleId);
 		List<Relation> relationLst = dao.getRelationByScale(scaleId);
 		
+		//初始化因子结果相关对象
+		Result result = new Result();
+		
 		//确定所属团体
 		Map<String, Object> map = this.loadPersonalInfo(null, data);
-		
 		List<Integer> groupIdLst = new ArrayList<Integer>();
 		int groupLen = groupLst.size();
 		for(int i = groupLen-1; i >= 0; i--) {
@@ -60,14 +62,17 @@ public class ScaleBo implements IScaleBo {
 		
 		Collections.sort(groupIdLst);	
 		
-		//初始化因子结果相关对象
-		Result result = new Result();
-		List<FactorResult> factorResultLst = new ArrayList<FactorResult>();
-		result.setItems(factorResultLst);
 		result.setGroupLst(new ArrayList<String>());
 		for(Group group : groupLst) {
 			result.getGroupLst().add(group.getName());
 		}
+		
+		if (groupLst.size() == 0) {
+			throw new UnsupportedOperationException("该用户不属于任何量表支持团体！");
+		}
+		
+		List<FactorResult> factorResultLst = new ArrayList<FactorResult>();
+		result.setItems(factorResultLst);		
 		
 		//计算因子分
 		List<OptionSelected> osLst = data.getData().getItems();
@@ -79,6 +84,8 @@ public class ScaleBo implements IScaleBo {
 		
 		List<FactorScore> factorScoreLst = new ArrayList<FactorScore>();
 		for(Factor factor : factorLst) {
+			System.out.println("will calc factor----->" + factor.getFactorId());
+			
 			double score = this.calcScore(factor.getFormula(), map);
 			map.put("F" + factor.getFactorId(), score);
 			
@@ -87,7 +94,7 @@ public class ScaleBo implements IScaleBo {
 			factorScore.setScore(score);
 			factorScoreLst.add(factorScore);
 			
-			System.out.println("factorscore---------" + factor.getFactorId() + " : " + score);
+			System.out.println("factorscore--------->" + factor.getFactorId() + " : " + score);
 			
 			//确定等级、解释及建议信息
 			for(Relation relation : relationLst) {
@@ -95,12 +102,15 @@ public class ScaleBo implements IScaleBo {
 						&& factor.getFactorId() == relation.getFactorId()) {
 					int levelId = this.getLevelId(relation.getFactorId(), relation.getPoints(), factorScoreLst);
 					FactorResult factorResult = this.getFactorResult(levelId, factor);
-					factorResult.setScore(score);
-					factorResultLst.add(factorResult);
+					if (factorResult != null) {
+						factorResult.setScore(score);
+						factorResultLst.add(factorResult);
+					}
 					
 					map.put("LEVEL_F" + factor.getFactorId(), levelId);
+					System.out.println("set LEVEL_F" + factor.getFactorId());
 					
-					break; // 某个人，某个因子应该只有一个结果， 不考虑一个人属于多个团体， 每个团体都对应了同一个因子的情况
+					break; 
 				}
 			}
 		}
@@ -109,9 +119,10 @@ public class ScaleBo implements IScaleBo {
 	}
 	
 	private FactorResult getFactorResult(int levelId, Factor factor) {
-		FactorResult factorResult = new FactorResult();
+		FactorResult factorResult = null;
 		for(Level level : factor.getLevelList()) {
 			if (levelId == level.getLevelId()) {
+				factorResult = new FactorResult();
 				factorResult.setFactorId(factor.getFactorId());
 				factorResult.setName(factor.getName());
 				factorResult.setLevelId(levelId);
@@ -132,7 +143,7 @@ public class ScaleBo implements IScaleBo {
 				List<Double> pointLst = this.getPointLst(points);
 				 
 				for(int i=0; i < pointLst.size(); i++) {
-					if(pointLst.get(i) >= fs.getScore()) { // ���磺 �ٽ�ֵΪ5,6 -> ����С, 5] (5, 6] (6, ���
+					if(pointLst.get(i) >= fs.getScore()) { //比如5,6 -> 无穷小, 5] (5, 6] (6, 无穷大
 						level = i + 1;
 						break;
 					}

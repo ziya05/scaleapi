@@ -17,6 +17,7 @@ import com.ziya05.entities.Factor;
 import com.ziya05.entities.FactorResult;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
+import com.ziya05.entities.InfoItemOption;
 import com.ziya05.entities.Level;
 import com.ziya05.entities.Option;
 import com.ziya05.entities.OptionSelected;
@@ -52,6 +53,7 @@ public class ScaleDao implements IScaleDao {
 			lst.add(scale);
 		}
 		
+		rs.close();
 		stmt.close();
 		conn.close();
 		
@@ -66,15 +68,40 @@ public class ScaleDao implements IScaleDao {
 		PersonalInfo info = new PersonalInfo();
 		List<InfoItem> items = new ArrayList<InfoItem>();
 		info.setItems(items);
-		String sql = String.format("select name, title from ScalePersonalConfig where scaleId = %d", scaleId);
+		String sql = String.format("select name, title, `type` from ScalePersonalConfig where scaleId = %d", scaleId);
 		
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			InfoItem item = new InfoItem();
 			item.setName(rs.getString("name"));
 			item.setTitle(rs.getString("title"));
+			item.setInfoType(rs.getInt("type"));
 			items.add(item);
 		}
+		rs.close();
+		
+		sql = "select name, `option` from ScalePersonalOption";
+		rs = stmt.executeQuery(sql);
+		List<InfoItemOption> itemOptionLst = new ArrayList<InfoItemOption>();
+		while(rs.next()) {
+			InfoItemOption itemOption = new InfoItemOption();
+			itemOption.setName(rs.getString("name"));
+			itemOption.setOption(rs.getString("option"));
+			
+			itemOptionLst.add(itemOption);
+		}
+		rs.close();
+		
+		for (InfoItem item : items) {
+			List<InfoItemOption> lst = new ArrayList<InfoItemOption>();
+			item.setItemOptions(lst);
+			for(InfoItemOption itemOption : itemOptionLst) {
+				if (item.getName().equals(itemOption.getName())) {
+					lst.add(itemOption);
+				}
+			}
+		}
+		
 		
 		stmt.close();
 		conn.close();
@@ -128,6 +155,7 @@ public class ScaleDao implements IScaleDao {
 		}
 		
 		rs.close();
+		stmt.close();
 		conn.close();
 		
 		for(Question question : questionLst) {
@@ -180,6 +208,8 @@ public class ScaleDao implements IScaleDao {
 		}
 		
 		rs.close();
+		stmt.close();
+		conn.close();
 		
 		for (Factor factor : factorLst) {
 			List<Level> lst = new ArrayList<Level>();
@@ -214,6 +244,8 @@ public class ScaleDao implements IScaleDao {
 		}
 		
 		rs.close();
+		stmt.close();
+		conn.close();
 		
 		return groupLst;
 	}
@@ -235,6 +267,8 @@ public class ScaleDao implements IScaleDao {
 		}
 		
 		rs.close();
+		stmt.close();
+		conn.close();
 		
 		return relationLst;
 	}
@@ -254,7 +288,9 @@ public class ScaleDao implements IScaleDao {
 		ResultSet rs = stmt.getGeneratedKeys();
 		rs.next();
 		int id = rs.getInt(1);
+		
 		rs.close();
+		stmt.close();
 		conn.close();
 		
 		return id;
@@ -281,6 +317,7 @@ public class ScaleDao implements IScaleDao {
 		conn.commit();
 		conn.setAutoCommit(true);
 		
+		stmt.close();
 		conn.close();
 	}
 	
@@ -309,6 +346,8 @@ public class ScaleDao implements IScaleDao {
 				scoreSelected.toString());
 		
 		stmt.execute(sql);
+		
+		stmt.close();
 		conn.close();
 	}
 	
@@ -330,6 +369,7 @@ public class ScaleDao implements IScaleDao {
 		
 		pstmt.execute();
 		
+		pstmt.close();
 		conn.close();
 	}
 	
@@ -369,6 +409,7 @@ public class ScaleDao implements IScaleDao {
 		
 		conn.setAutoCommit(true);
 		
+		pstmt.close();
 		conn.close();
 	}
 	
