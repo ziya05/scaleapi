@@ -20,6 +20,7 @@ import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Result;
 import com.ziya05.entities.Scale;
+import com.ziya05.entities.ScaleException;
 import com.ziya05.entities.SelectedData;
 import com.ziya05.entities.TesteeData;
 import com.ziya05.factories.ScaleBoFactory;
@@ -62,15 +63,24 @@ public class ScaleService {
     
     @POST 
     @Path("/scale/result/{id}") 
-    @Produces(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.TEXT_PLAIN) 
     @Consumes(MediaType.APPLICATION_JSON)
-    public void saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException, NamingException {
+    public String saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException, NamingException {
+    	String strReturn = "";
+    	
     	Sleep();
     	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
     	int baseId = bo.saveTesteeData(id, data);
     	
-    	Result result = bo.getResult(id, data);
-    	bo.saveResult(id, baseId, result);
+    	try
+    	{
+	    	Result result = bo.getResult(id, data);
+	    	bo.saveResult(id, baseId, result);
+    	} catch (ScaleException e) {
+    		strReturn = e.getMessage();
+    	}
+    	
+    	return strReturn;
     }
     
     private void Sleep() {

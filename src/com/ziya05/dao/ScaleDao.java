@@ -43,7 +43,7 @@ public class ScaleDao implements IScaleDao {
 		Statement stmt = conn.createStatement();
 		
 		List<Scale> lst = new ArrayList<Scale>();
-		String sql = "select id, name, description from Scale where isdelete = 0 order by id";
+		String sql = "select id, name, description from scale where isdelete = 0 order by id";
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Scale scale = new Scale();
@@ -68,7 +68,7 @@ public class ScaleDao implements IScaleDao {
 		PersonalInfo info = new PersonalInfo();
 		List<InfoItem> items = new ArrayList<InfoItem>();
 		info.setItems(items);
-		String sql = String.format("select name, title, `type` from ScalePersonalConfig where scaleId = %d", scaleId);
+		String sql = String.format("select name, title, `type` from scalepersonalconfig where scaleId = %d", scaleId);
 		
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
@@ -80,7 +80,7 @@ public class ScaleDao implements IScaleDao {
 		}
 		rs.close();
 		
-		sql = "select name, `option` from ScalePersonalOption";
+		sql = "select name, `option` from scalepersonaloption";
 		rs = stmt.executeQuery(sql);
 		List<InfoItemOption> itemOptionLst = new ArrayList<InfoItemOption>();
 		while(rs.next()) {
@@ -115,7 +115,7 @@ public class ScaleDao implements IScaleDao {
 		Connection conn = getConn();
 		Statement stmt = conn.createStatement();
 		
-		String sql = String.format("select id, name, description from Scale where isdelete = 0 and id = %d", scaleId);
+		String sql = String.format("select id, name, description from scale where isdelete = 0 and id = %d", scaleId);
 		ResultSet rs = stmt.executeQuery(sql);
 		rs.next();
 
@@ -128,7 +128,7 @@ public class ScaleDao implements IScaleDao {
 
 		List<Question> questionLst = new ArrayList<Question>();
 		scale.setItems(questionLst);
-		sql = String.format("select questionId, title, questionType from Question where scaleId = %d order by questionId", scaleId);
+		sql = String.format("select questionId, title, questionType from question where scaleId = %d order by questionId", scaleId);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Question question = new Question();
@@ -142,7 +142,7 @@ public class ScaleDao implements IScaleDao {
 		rs.close();
 		
 		List<Option> optionLst = new ArrayList<Option>();
-		sql = String.format("select questionId, optionId, content, score, next from `Option` where scaleId = %d order by questionId, optionId", scaleId);
+		sql = String.format("select questionId, optionId, content, score, next from `option` where scaleId = %d order by questionId, optionId", scaleId);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Option option = new Option();
@@ -233,7 +233,7 @@ public class ScaleDao implements IScaleDao {
 		Statement stmt = conn.createStatement();
 		
 		List<Group> groupLst = new ArrayList<Group>();
-		String sql = String.format("select groupId, name, formula from `Group` where scaleId = %d order by groupId", scaleId);
+		String sql = String.format("select groupId, name, formula from `group` where scaleId = %d order by groupId", scaleId);
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Group group = new Group();
@@ -256,7 +256,7 @@ public class ScaleDao implements IScaleDao {
 		Statement stmt = conn.createStatement();
 		
 		List<Relation> relationLst = new ArrayList<Relation>();
-		String sql = String.format("select factorId, groupId, points from Relation where scaleId = %d order by factorId, groupId", scaleId);
+		String sql = String.format("select factorId, groupId, points from relation where scaleId = %d order by factorId, groupId", scaleId);
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Relation relation = new Relation();
@@ -278,7 +278,7 @@ public class ScaleDao implements IScaleDao {
 		Connection conn = getConn();
 		Statement stmt = conn.createStatement();
 		
-		String sql = String.format("insert into Testeebase(scaleId, name, gender, age, testTime) values(%s, '%s', '%s', %f, now())", 
+		String sql = String.format("insert into testeebase(scaleId, name, gender, age, testTime) values(%s, '%s', '%s', %f, now())", 
 				scaleId,
 				data.getInfo().getName(), 
 				data.getInfo().getGender(),
@@ -304,7 +304,7 @@ public class ScaleDao implements IScaleDao {
 		
 		String userName = data.getInfo().getName();
 		for(InfoItem item : data.getInfo().getItems()) {
-			String sql = String.format("insert into TesteePersonalInfo(scaleId, baseId, userName, name, title, content) values(%d, %d, '%s', '%s', '%s', '%s')",
+			String sql = String.format("insert into testeepersonalinfo(scaleId, baseId, userName, name, title, content) values(%d, %d, '%s', '%s', '%s', '%s')",
 					scaleId,
 					baseId,
 					userName,
@@ -338,7 +338,7 @@ public class ScaleDao implements IScaleDao {
 			scoreSelected.append(selected.getScore() + ",");
 		}
 		
-		String sql = String.format("insert into TesteeData(scaleId, baseId, questionIds, optionSelected, ScoreSelected) values(%d, %d, '%s', '%s', '%s')", 
+		String sql = String.format("insert into testeedata(scaleId, baseId, questionIds, optionSelected, ScoreSelected) values(%d, %d, '%s', '%s', '%s')", 
 				scaleId,
 				baseId,
 				questionIds.toString(),
@@ -355,7 +355,7 @@ public class ScaleDao implements IScaleDao {
 	public void insertResultBase(int scaleId, int testeeBaseId, Result result)
 			throws ClassNotFoundException, SQLException {
 		Connection conn = getConn();
-		String sql = "insert into ResultBase(scaleId, testeeBaseId, `groups`) values(?, ?, ?)";
+		String sql = "insert into resultbase(scaleId, testeeBaseId, `groups`) values(?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		StringBuilder groups = new StringBuilder();
@@ -378,7 +378,7 @@ public class ScaleDao implements IScaleDao {
 			throws ClassNotFoundException, SQLException {
 		Connection conn = getConn();
 		conn.setAutoCommit(false);
-		String sql = "insert into ResultFactor(scaleId, factorId, testeeBaseId, name, score, levelId, description, advice) values(?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into resultfactor(scaleId, factorId, testeeBaseId, name, score, levelId, description, advice) values(?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		for(FactorResult fr : result.getItems()) {

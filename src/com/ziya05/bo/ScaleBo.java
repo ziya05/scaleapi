@@ -25,6 +25,7 @@ import com.ziya05.entities.Level;
 import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.Relation;
 import com.ziya05.entities.Result;
+import com.ziya05.entities.ScaleException;
 import com.ziya05.entities.SelectedData;
 import com.ziya05.entities.TesteeData;
 import com.ziya05.factories.ScaleDaoFactory;
@@ -68,11 +69,11 @@ public class ScaleBo implements IScaleBo {
 		}
 		
 		if (groupLst.size() == 0) {
-			throw new UnsupportedOperationException("该用户不属于任何量表支持团体！");
-		}
+			throw new ScaleException("该用户不属于任何量表支持团体！");
+		}	
 		
 		List<FactorResult> factorResultLst = new ArrayList<FactorResult>();
-		result.setItems(factorResultLst);		
+		result.setItems(factorResultLst);	
 		
 		//计算因子分
 		List<OptionSelected> osLst = data.getData().getItems();
@@ -254,8 +255,16 @@ public class ScaleBo implements IScaleBo {
 	
 	@Override
 	public void saveResult(int scaleId, int baseId, Result result) throws ClassNotFoundException, SQLException {
-		dao.insertResultBase(scaleId, baseId, result);
-		dao.insertResultFactor(scaleId, baseId, result);
+		
+		if (result.getGroupLst() != null 
+				&& result.getGroupLst().size() > 0) {
+			dao.insertResultBase(scaleId, baseId, result);
+		}
+		
+		if (result.getItems() != null
+				&& result.getItems().size() > 0) {
+			dao.insertResultFactor(scaleId, baseId, result);
+		}
 	}
 
 }
