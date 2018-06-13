@@ -41,7 +41,6 @@ public class ScaleService {
     @Path("/scales") 
     @Produces(MediaType.APPLICATION_JSON) 
     public List<Scale> getScales() throws ClassNotFoundException, SQLException{ 
-    	Sleep();
         return dao.getAllScales(); 
     }  
     
@@ -49,7 +48,6 @@ public class ScaleService {
     @Path("/personalInfo/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     public PersonalInfo getPersonalInfoById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-    	Sleep();
     	return dao.getPersonalInfoByScaleId(id);
     }
 	
@@ -57,7 +55,6 @@ public class ScaleService {
     @Path("/scale/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
 	public Scale getScaleById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-    	Sleep();
 		return dao.getScaleByScaleId(id);
 	}
     
@@ -68,7 +65,6 @@ public class ScaleService {
     public String saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException, NamingException {
     	String strReturn = "";
     	
-    	Sleep();
     	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
     	int baseId = bo.saveTesteeData(id, data);
     	
@@ -83,12 +79,4 @@ public class ScaleService {
     	return strReturn;
     }
     
-    private void Sleep() {
-    	try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
 }

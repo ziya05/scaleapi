@@ -43,12 +43,13 @@ public class ScaleDao implements IScaleDao {
 		Statement stmt = conn.createStatement();
 		
 		List<Scale> lst = new ArrayList<Scale>();
-		String sql = "select id, name, description from scale where isdelete = 0 order by id";
+		String sql = "select id, name, questionCount, description from scale where isdelete = 0 order by id";
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
 			Scale scale = new Scale();
 			scale.setId(rs.getInt("id"));
 			scale.setName(rs.getString("name"));
+			scale.setQuestionCount(rs.getInt("questionCount"));
 			scale.setDescription(rs.getString("description"));
 			lst.add(scale);
 		}
@@ -115,13 +116,14 @@ public class ScaleDao implements IScaleDao {
 		Connection conn = getConn();
 		Statement stmt = conn.createStatement();
 		
-		String sql = String.format("select id, name, description from scale where isdelete = 0 and id = %d", scaleId);
+		String sql = String.format("select id, name, questionCount, description from scale where isdelete = 0 and id = %d", scaleId);
 		ResultSet rs = stmt.executeQuery(sql);
 		rs.next();
 
 		Scale scale = new Scale();
 		scale.setId(rs.getInt("id"));
 		scale.setName(rs.getString("name"));
+		scale.setQuestionCount(rs.getInt("questionCount"));
 		scale.setDescription(rs.getString("description"));
 		
 		rs.close();

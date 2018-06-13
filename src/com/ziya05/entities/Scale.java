@@ -7,22 +7,25 @@ public class Scale implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private int id;
 	private String name;
+	private int questionCount;
 	private String description;
 	private List<Question> items;
 	
 	public Scale() {}
 	
-	public Scale(int id, String name, String description) {
+	public Scale(int id, String name, int questionCount, String description) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.questionCount = questionCount;
 		this.description = description;
 	}
 	
-	public Scale(int id, String name, String description, List<Question> items) {
+	public Scale(int id, String name, int questionCount, String description, List<Question> items) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.questionCount = questionCount;
 		this.description = description;
 		this.items = items;
 	}
@@ -41,6 +44,14 @@ public class Scale implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(int questionCount) {
+		this.questionCount = questionCount;
 	}
 
 	public String getDescription() {
