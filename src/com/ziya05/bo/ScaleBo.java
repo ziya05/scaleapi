@@ -85,8 +85,7 @@ public class ScaleBo implements IScaleBo {
 		
 		List<FactorScore> factorScoreLst = new ArrayList<FactorScore>();
 		for(Factor factor : factorLst) {
-			System.out.println("will calc factor----->" + factor.getFactorId());
-			
+
 			double score = this.calcScore(factor.getFormula(), map);
 			map.put("F" + factor.getFactorId(), score);
 			
@@ -94,8 +93,6 @@ public class ScaleBo implements IScaleBo {
 			factorScore.setFactorId(factor.getFactorId());
 			factorScore.setScore(score);
 			factorScoreLst.add(factorScore);
-			
-			System.out.println("factorscore--------->" + factor.getFactorId() + " : " + score);
 			
 			//确定等级、解释及建议信息
 			for(Relation relation : relationLst) {
@@ -109,12 +106,13 @@ public class ScaleBo implements IScaleBo {
 					}
 					
 					map.put("LEVEL_F" + factor.getFactorId(), levelId);
-					System.out.println("set LEVEL_F" + factor.getFactorId());
 					
 					break; 
 				}
 			}
 		}
+		
+		System.gc();
 
 		return result;
 	}
@@ -246,7 +244,6 @@ public class ScaleBo implements IScaleBo {
 	@Override
 	public int saveTesteeData(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException {
 		int baseId = dao.insertTesteeBase(scaleId, data);
-		System.out.println(baseId);
 		dao.insertTesteePersonalInfo(scaleId, baseId, data);
 		dao.insertTesteeData(scaleId, baseId, data);
 		

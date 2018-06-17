@@ -24,6 +24,7 @@ public final class Utils {
 		}
 
 		Object result = engine.eval(formula);
+		
 		return result;
 	}
 	
