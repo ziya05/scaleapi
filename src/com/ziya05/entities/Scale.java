@@ -10,26 +10,8 @@ public class Scale implements Serializable {
 	private int questionCount;
 	private String description;
 	private List<Question> items;
+	private List<GlobalJump> jumpItems;
 	
-	public Scale() {}
-	
-	public Scale(int id, String name, int questionCount, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.questionCount = questionCount;
-		this.description = description;
-	}
-	
-	public Scale(int id, String name, int questionCount, String description, List<Question> items) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.questionCount = questionCount;
-		this.description = description;
-		this.items = items;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -69,5 +51,15 @@ public class Scale implements Serializable {
 	public void setItems(List<Question> items) {
 		this.items = items;
 	}
+
+	public List<GlobalJump> getJumpItems() {
+		return jumpItems;
+	}
+
+	public void setJumpItems(List<GlobalJump> jumpItems) {
+		this.jumpItems = jumpItems;
+	}
+	
+	
 	
 }

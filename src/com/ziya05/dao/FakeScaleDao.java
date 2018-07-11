@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ziya05.entities.Factor;
+import com.ziya05.entities.FactorMap;
+import com.ziya05.entities.GlobalJump;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
 import com.ziya05.entities.Level;
@@ -22,17 +24,17 @@ public class FakeScaleDao implements IScaleDao {
 	public List<Scale> getAllScales() {
 		List<Scale> scales = new ArrayList<Scale>();
 		
-		scales.add(new Scale(1, "��һ�������������", 8, "����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(3, "�����˸��������", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(4, "��ÿ����׬����Ǯ����", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(5, "�����㻹�ܻ������", 8,"����ѧ��һ���о���������������Ӱ���µľ����ܺ���Ϊ��Ŀ�ѧ�����ͻ���������Ժ�Ӧ�ã�ʵ�����ԡ� ����ѧ������������ѧ��Ӧ������ѧ�����������о��漰֪������֪��������˼ά���˸���Ϊϰ�ߡ��˼ʹ�ϵ������ϵ���������Ҳ���ճ������������򡪡���ͥ�����������������ȷ���������"));
-		scales.add(new Scale(6, "�����������˹������", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(7, "ranger����", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(8, "˵����Ĺ���", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(9, "�˹���δ��", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(10, "ÿ���ɶ����", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
-		scales.add(new Scale(11, "���������ַ�", 8,"���и�\"�ĺ�[]djʫ��ɶ{Ϊʲô}��Ҳ���ǵ�, ���Ǹ�ʲô"));
-		
+//		scales.add(new Scale(1, "��һ�������������", 8, "����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(3, "�����˸��������", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(4, "��ÿ����׬����Ǯ����", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(5, "�����㻹�ܻ������", 8,"����ѧ��һ���о���������������Ӱ���µľ����ܺ���Ϊ��Ŀ�ѧ�����ͻ���������Ժ�Ӧ�ã�ʵ�����ԡ� ����ѧ������������ѧ��Ӧ������ѧ�����������о��漰֪������֪��������˼ά���˸���Ϊϰ�ߡ��˼ʹ�ϵ������ϵ���������Ҳ���ճ������������򡪡���ͥ�����������������ȷ���������"));
+//		scales.add(new Scale(6, "�����������˹������", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(7, "ranger����", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(8, "˵����Ĺ���", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(9, "�˹���δ��", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(10, "ÿ���ɶ����", 8,"����һ���������̵����� �����ǵ�������ѧ��ʦĳĳĳ"));
+//		scales.add(new Scale(11, "���������ַ�", 8,"���и�\"�ĺ�[]djʫ��ɶ{Ϊʲô}��Ҳ���ǵ�, ���Ǹ�ʲô"));
+//		
 		return scales;
 	}
 	
@@ -63,11 +65,13 @@ public class FakeScaleDao implements IScaleDao {
 		questionLst.add(new Question(8, "�����ô��", 1, getOptionList2()));
 		questionLst.add(new Question(9, "�����ô��", 1, getOptionList()));
 		
-		return new Scale(4, 
-				"�����㻹�ܻ������", 
-				8,
-				id + ":����ѧ��һ���о���������������Ӱ���µľ����ܺ���Ϊ��Ŀ�ѧ�����ͻ���������Ժ�Ӧ�ã�ʵ�����ԡ� ����ѧ������������ѧ��Ӧ������ѧ�����������о��漰֪������֪��������˼ά���˸���Ϊϰ�ߡ��˼ʹ�ϵ������ϵ���������Ҳ���ճ������������򡪡���ͥ�����������������ȷ���������", 
-				questionLst);
+//		return new Scale(4, 
+//				"�����㻹�ܻ������", 
+//				8,
+//				id + ":����ѧ��һ���о���������������Ӱ���µľ����ܺ���Ϊ��Ŀ�ѧ�����ͻ���������Ժ�Ӧ�ã�ʵ�����ԡ� ����ѧ������������ѧ��Ӧ������ѧ�����������о��漰֪������֪��������˼ά���˸���Ϊϰ�ߡ��˼ʹ�ϵ������ϵ���������Ҳ���ճ������������򡪡���ͥ�����������������ȷ���������", 
+//				questionLst);
+		
+		return null;
 	}
 	
 	@Override
@@ -207,5 +211,24 @@ public class FakeScaleDao implements IScaleDao {
 	@Override
 	public void insertResultFactor(int scaleId, int testeeBaseId, Result result)
 			throws ClassNotFoundException, SQLException {		
+	}
+
+	@Override
+	public List<FactorMap> getFactorMapByScale(int scaleId) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateResultScore(int scaleId, int testeeBaseId, String score)
+			throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<GlobalJump> getGlobalJumpByScale(int scaleId) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

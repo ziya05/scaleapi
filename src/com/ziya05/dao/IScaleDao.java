@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ziya05.entities.Factor;
+import com.ziya05.entities.FactorMap;
+import com.ziya05.entities.GlobalJump;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Relation;
@@ -24,6 +26,10 @@ public interface IScaleDao {
 	
 	List<Relation> getRelationByScale(int scaleId) throws ClassNotFoundException, SQLException;
 	
+	List<FactorMap> getFactorMapByScale(int scaleId) throws ClassNotFoundException, SQLException;
+	
+	List<GlobalJump> getGlobalJumpByScale(int scaleId) throws ClassNotFoundException, SQLException;
+	
 	int insertTesteeBase(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException;
 	
 	void insertTesteePersonalInfo(int scaleId, int baseId, TesteeData data) throws ClassNotFoundException, SQLException;
@@ -33,4 +39,6 @@ public interface IScaleDao {
 	void insertResultBase(int scaleId, int testeeBaseId, Result result) throws ClassNotFoundException, SQLException;
 	
 	void insertResultFactor(int scaleId, int testeeBaseId, Result result) throws ClassNotFoundException, SQLException;
+	
+	void updateResultScore(int scaleId, int testeeBaseId, String score) throws ClassNotFoundException, SQLException;
 }

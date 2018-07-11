@@ -9,6 +9,30 @@ import javax.script.ScriptException;
 
 public final class Utils {
 	
+	public static ScriptEngine createEngine() throws ScriptException {
+		return Utils.createEngine(null, null);
+	}
+	
+	public static ScriptEngine createEngine(Map<String, Object> map, 
+			List<String> functionLst) throws ScriptException {
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("js");
+		
+		if(map != null) {
+			for(String key : map.keySet()) {
+				engine.put(key, map.get(key));
+			}
+		}
+		
+		if (functionLst != null) {
+			for (String function : functionLst) {
+				engine.eval(function);
+			}
+		}
+
+		return engine;
+	}
+	
 	public static Object evel(String formula, 
 			Map<String, Object> map, 
 			List<String> functionLst) throws ScriptException {

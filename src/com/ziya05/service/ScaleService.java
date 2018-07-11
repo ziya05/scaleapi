@@ -29,33 +29,33 @@ import com.ziya05.factories.ScaleDaoFactory;
 @Path("/ScaleService") 
 public class ScaleService {
 	
-    IScaleDao dao = null;
+    IScaleBo bo = null;
     
     public ScaleService() throws NamingException {
     	super();
-    	
-    	dao = ScaleDaoFactory.createScaleDao();
+
+    	bo = ScaleBoFactory.createScaleBo();
     }
     
     @GET 
     @Path("/scales") 
     @Produces(MediaType.APPLICATION_JSON) 
     public List<Scale> getScales() throws ClassNotFoundException, SQLException{ 
-        return dao.getAllScales(); 
+        return bo.getScales(); 
     }  
     
     @GET 
     @Path("/personalInfo/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
     public PersonalInfo getPersonalInfoById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-    	return dao.getPersonalInfoByScaleId(id);
+    	return bo.getPersonalInfoById(id);
     }
 	
     @GET 
     @Path("/scale/{id}") 
     @Produces(MediaType.APPLICATION_JSON) 
 	public Scale getScaleById(@PathParam("id") int id) throws ClassNotFoundException, SQLException {
-		return dao.getScaleByScaleId(id);
+		return bo.getScaleById(id);
 	}
     
     @POST 
@@ -65,7 +65,6 @@ public class ScaleService {
     public String saveResult(@PathParam("id") int id, TesteeData data) throws ClassNotFoundException, SQLException, ScriptException, NamingException {
     	String strReturn = "";
     	
-    	IScaleBo bo = ScaleBoFactory.createScaleBo(id);
     	int baseId = bo.saveTesteeData(id, data);
     	
     	try

@@ -14,7 +14,9 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.ziya05.entities.Factor;
+import com.ziya05.entities.FactorMap;
 import com.ziya05.entities.FactorResult;
+import com.ziya05.entities.GlobalJump;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
 import com.ziya05.entities.InfoItemOption;
@@ -329,6 +331,75 @@ public class ScaleDao implements IScaleDao {
 	}
 	
 	@Override
+	public List<FactorMap> getFactorMapByScale(int scaleId) throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		List<FactorMap> factorMapLst = new ArrayList<FactorMap>();
+		
+		try {
+			conn = getConn();
+			stmt = conn.createStatement();
+			
+			
+			String sql = String.format("select factorId, name, formula from factormap where scaleId = %d order by factorId, name", scaleId);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				FactorMap factorMap = new FactorMap();
+				factorMap.setFactorId(rs.getInt("factorId"));
+				factorMap.setName(rs.getString("name"));
+				factorMap.setFormula(rs.getString("formula"));
+				factorMapLst.add(factorMap);
+			}
+		
+		} finally {
+			this.closeResultSet(rs);
+			this.closeStatement(stmt);
+			this.closeConn(conn);
+		}
+		
+		return factorMapLst;
+	}
+	
+	@Override
+	public List<GlobalJump> getGlobalJumpByScale(int scaleId) throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		List<GlobalJump> globalJumpLst = new ArrayList<GlobalJump>();
+		try {
+			conn = getConn();
+			stmt = conn.createStatement();
+			
+			
+			String sql = String.format("select name, begin, end, continuous, questionCount, score, jumpNo from globaljump where scaleId = %d order by name", scaleId);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				GlobalJump globalJump = new GlobalJump();
+
+				globalJump.setName(rs.getString("name"));
+				globalJump.setBegin(rs.getInt("begin"));
+				globalJump.setEnd(rs.getInt("end"));
+				globalJump.setContinuous(rs.getInt("continuous"));
+				globalJump.setQuestionCount(rs.getInt("questionCount"));
+				globalJump.setScore(rs.getDouble("score"));
+				globalJump.setJumpNo(rs.getInt("jumpNo"));
+				
+				globalJumpLst.add(globalJump);
+			}
+		
+		} finally {
+			this.closeResultSet(rs);
+			this.closeStatement(stmt);
+			this.closeConn(conn);
+		}
+		
+		return globalJumpLst;
+	}
+	
+	@Override
 	public int insertTesteeBase(int scaleId, TesteeData data) throws ClassNotFoundException, SQLException {
 		
 		Connection conn = null;
@@ -507,6 +578,32 @@ public class ScaleDao implements IScaleDao {
 		}
 	}
 	
+	@Override
+	public void updateResultScore(int scaleId, int testeeBaseId, String score)
+			throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			conn = getConn();
+			
+			String sql = "update testeedata set ScoreSelected=? where scaleId=? and baseId=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, score);
+			pstmt.setInt(2, scaleId);
+			pstmt.setInt(3, testeeBaseId);
+			
+			pstmt.execute();
+			
+		} finally {
+			this.closeStatement(pstmt);
+			this.closeConn(conn);
+		}
+		
+	}
+	
 	private Connection getConn() throws SQLException, ClassNotFoundException {
 		return ds.getConnection();
 	}
@@ -528,4 +625,5 @@ public class ScaleDao implements IScaleDao {
 			conn.close();
 		}
 	}
+
 }

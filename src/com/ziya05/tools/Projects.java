@@ -25,6 +25,16 @@ public class Projects {
 				"                \r\n" + 
 				"				return isSame;\r\n" + 
 				"			}");
+		add("function doGet(num1, num2, val1, val2) {\r\n" + 
+				"                                val1 = typeof val1 !== 'undefined' ? val1 : 1;\r\n" + 
+				"                                val2 = typeof val2 !== 'undefined' ? val2 : 0;\r\n" + 
+				"\r\n" + 
+				"                                if (num1 == num2) {\r\n" + 
+				"                                        return val1;\r\n" + 
+				"                                } else {\r\n" + 
+				"                                        return val2;\r\n" + 
+				"                                }\r\n" + 
+				"                        }");
 	}};
 	
 	public static List<String> getFactorFunctionLst() {
