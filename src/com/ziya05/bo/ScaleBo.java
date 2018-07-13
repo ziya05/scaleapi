@@ -21,7 +21,6 @@ import com.ziya05.entities.FactorScore;
 import com.ziya05.entities.GlobalJump;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
-import com.ziya05.entities.Level;
 import com.ziya05.entities.Option;
 import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.PersonalInfo;
@@ -87,9 +86,7 @@ public class ScaleBo implements IScaleBo {
 		List<FactorScore> factorScoreLst = new ArrayList<FactorScore>();
 		for(Factor factor : factorLst) {
 
-			//double score = this.calcScore(factor.getFormula(), map, currFunctionLst);
-			//map.put("F" + factor.getFactorId(), score);
-			double score = (double)factorEngine.eval(factor.getFormula());
+			double score = (double)factorEngine.eval(convertFormula(factor.getFormula()));
 			factorEngine.put("F" + factor.getFactorId(), score);
 			
 			FactorScore factorScore = new FactorScore();
@@ -97,23 +94,29 @@ public class ScaleBo implements IScaleBo {
 			factorScore.setScore(score);
 			factorScoreLst.add(factorScore);
 			
-			//确定等级、解释及建议信息
-			for(Relation relation : relationLst) {
-				if(groupIdLst.contains(relation.getGroupId())
-						&& factor.getFactorId() == relation.getFactorId()) {
-					int levelId = this.getLevelId(relation.getFactorId(), relation.getPoints(), factorScoreLst);
-					FactorResult factorResult = this.getFactorResult(levelId, factor);
-					if (factorResult != null) {
-						factorResult.setScore(score);
-						factorResultLst.add(factorResult);
+			FactorResult factorResult = new FactorResult();
+			int levelId = 0;
+			
+			if (factor.getLevelCount() > 0) {
+				//确定等级、解释及建议信息
+				for(Relation relation : relationLst) {
+					if(groupIdLst.contains(relation.getGroupId())
+							&& factor.getFactorId() == relation.getFactorId()) {
+						levelId = this.getLevelId(relation.getFactorId(), relation.getPoints(), factorScoreLst);
+
+						break; 
 					}
-					
-					//map.put("LEVEL_F" + factor.getFactorId(), levelId);
-					factorEngine.put("LEVEL_F" + factor.getFactorId(), levelId);
-					
-					break; 
 				}
-			}
+			} 
+
+			factorResult.setFactorId(factor.getFactorId());
+			factorResult.setName(factor.getName());
+			factorResult.setLevelId(levelId);
+			factorResult.setScore(score);
+			factorResultLst.add(factorResult);
+
+			factorEngine.put("LEVEL_F" + factor.getFactorId(), factorResult.getLevelId());
+			
 		}
 		
 		return result;
@@ -134,7 +137,6 @@ public class ScaleBo implements IScaleBo {
 			Group group = groupLst.get(i);
 			Boolean isGroup = (Boolean)groupEngine.eval(group.getFormula());
 			
-			//if(!isGroup(group.getFormula(), map)) {
 			if (!isGroup) {
 				groupLst.remove(i);
 			} else {
@@ -233,28 +235,11 @@ public class ScaleBo implements IScaleBo {
 		return map;
 	}
 		
-	private FactorResult getFactorResult(int levelId, Factor factor) {
-		FactorResult factorResult = null;
-		for(Level level : factor.getLevelList()) {
-			if (levelId == level.getLevelId()) {
-				factorResult = new FactorResult();
-				factorResult.setFactorId(factor.getFactorId());
-				factorResult.setName(factor.getName());
-				factorResult.setLevelId(levelId);
-				factorResult.setDescription(level.getDescription());
-				factorResult.setAdvice(level.getAdvice());
-				break;
-			}
-		}
-		
-		return factorResult;
-	}
-	
 	private int getLevelId(int factorId, String points, List<FactorScore> factorScoreLst) {
 		int level = 0;
 		for(FactorScore fs : factorScoreLst) {
 			if (factorId == fs.getFactorId()) {
-				double score = fs.getScore();
+
 				List<Double> pointLst = this.getPointLst(points);
 				 
 				for(int i=0; i < pointLst.size(); i++) {
@@ -277,7 +262,7 @@ public class ScaleBo implements IScaleBo {
 	
 	private List<Double> getPointLst(String points) {
 		String[] pointArr = points.split(",");
-		List<Double> pointLst = new ArrayList();
+		List<Double> pointLst = new ArrayList<Double>();
 		for(String elem : pointArr) {
 			pointLst.add(new Double(elem.trim()));
 		}
@@ -285,15 +270,7 @@ public class ScaleBo implements IScaleBo {
 		
 		return pointLst;
 	}
-	
-//	private Boolean isGroup(String formula, Map<String, Object> map) throws ScriptException {
-//		return (Boolean)Utils.evel(formula, map);
-//	}
-//
-//	private double calcScore(String formula, Map<String, Object> map, List<String> functionLst) throws ScriptException {
-//		return new Double(Utils.evel(convertFormula(formula), map, functionLst).toString());
-//	}
-	
+
 	private String convertFormula(String formula) {
 		StringBuffer result = new StringBuffer();
 		Pattern pattern = Pattern.compile("isMax\\((.*?)\\|(.*?)\\)");

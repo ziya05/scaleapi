@@ -1,7 +1,6 @@
 package com.ziya05.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,6 @@ import com.ziya05.entities.GlobalJump;
 import com.ziya05.entities.Group;
 import com.ziya05.entities.InfoItem;
 import com.ziya05.entities.InfoItemOption;
-import com.ziya05.entities.Level;
 import com.ziya05.entities.Option;
 import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.PersonalInfo;
@@ -221,42 +219,19 @@ public class ScaleDao implements IScaleDao {
 			conn = getConn();
 			stmt = conn.createStatement();
 	
-			String sql = String.format("select factorId, name, formula from factor where scaleId = %d order by factorId", scaleId);
+			String sql = String.format("select factorId, name, formula, levelCount from factor where scaleId = %d order by factorId", scaleId);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				Factor factor = new Factor();
 				factor.setFactorId(rs.getInt("factorId"));
 				factor.setName(rs.getString("name"));
 				factor.setFormula(rs.getString("formula"));
+				factor.setLevelCount(rs.getInt("levelCount"));
 				factorLst.add(factor);
 			}
 			
 			rs.close();
 			
-			List<Level> levelLst = new ArrayList<Level>();
-			sql = String.format("select factorId, levelId, description, advice from `level` where scaleId = %d order by factorId, levelId", scaleId);
-			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				Level level = new Level();
-				level.setFactorId(rs.getInt("factorId"));
-				level.setLevelId(rs.getInt("levelId"));
-				level.setDescription(rs.getString("description"));
-				level.setAdvice(rs.getString("advice"));
-				levelLst.add(level);
-			}
-						
-			for (Factor factor : factorLst) {
-				List<Level> lst = new ArrayList<Level>();
-				factor.setLevelList(lst);
-				int len = levelLst.size();
-				for(int i = len - 1; i >= 0; i--) {
-					Level level = levelLst.get(i);
-					if (factor.getFactorId() == level.getFactorId()) {
-						lst.add(level);
-						levelLst.remove(level);
-					}
-				}
-			}	
 		} finally {
 			this.closeResultSet(rs);
 			this.closeStatement(stmt);
@@ -454,7 +429,9 @@ public class ScaleDao implements IScaleDao {
 						item.getContent());
 				stmt.addBatch(sql);
 			}
-			int[] rs = stmt.executeBatch();		
+			
+			stmt.executeBatch();	
+			
 			conn.commit();
 			conn.setAutoCommit(true);
 		
@@ -541,7 +518,8 @@ public class ScaleDao implements IScaleDao {
 			
 			conn = getConn();
 			conn.setAutoCommit(false);
-			String sql = "insert into resultfactor(scaleId, factorId, testeeBaseId, name, score, levelId, description, advice) values(?, ?, ?, ?, ?, ?, ?, ?)";
+	
+			String sql = "insert into resultfactor(scaleId, factorId, testeeBaseId, name, score, levelId) values(?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			for(FactorResult fr : result.getItems()) {
@@ -551,18 +529,6 @@ public class ScaleDao implements IScaleDao {
 				pstmt.setString(4, fr.getName());
 				pstmt.setDouble(5, fr.getScore());
 				pstmt.setInt(6, fr.getLevelId());
-				
-				if (fr.getDescription() != null) {
-					pstmt.setString(7, fr.getDescription());
-				} else {
-					pstmt.setNull(7, Types.VARCHAR);
-				}
-				
-				if (fr.getAdvice() != null) {
-					pstmt.setString(8, fr.getAdvice());
-				}else {
-					pstmt.setNull(8, Types.VARCHAR);
-				}
 				
 				pstmt.addBatch();
 			}

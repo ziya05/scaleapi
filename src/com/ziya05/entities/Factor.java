@@ -8,20 +8,9 @@ public class Factor implements Serializable {
 	
 	private String name;
 	private String formula;
-	private List<Level> levelList;
 	private int FactorId;
+	private int levelCount;
 	
-	public Factor() {
-		super();
-	}
-
-	public Factor(String name, String formula, List<Level> levelList) {
-		super();
-		this.name = name;
-		this.formula = formula;
-		this.levelList = levelList;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -38,14 +27,6 @@ public class Factor implements Serializable {
 		this.formula = formula;
 	}
 
-	public List<Level> getLevelList() {
-		return levelList;
-	}
-
-	public void setLevelList(List<Level> levelList) {
-		this.levelList = levelList;
-	}
-
 	public int getFactorId() {
 		return FactorId;
 	}
@@ -54,4 +35,13 @@ public class Factor implements Serializable {
 		FactorId = factorId;
 	}
 
+	public int getLevelCount() {
+		return levelCount;
+	}
+
+	public void setLevelCount(int levelCount) {
+		this.levelCount = levelCount;
+	}
+
+	
 }

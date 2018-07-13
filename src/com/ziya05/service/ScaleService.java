@@ -6,7 +6,6 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.script.ScriptException;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,16 +14,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.ziya05.bo.IScaleBo;
-import com.ziya05.dao.IScaleDao;
-import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Result;
 import com.ziya05.entities.Scale;
 import com.ziya05.entities.ScaleException;
-import com.ziya05.entities.SelectedData;
 import com.ziya05.entities.TesteeData;
 import com.ziya05.factories.ScaleBoFactory;
-import com.ziya05.factories.ScaleDaoFactory;
 
 @Path("/ScaleService") 
 public class ScaleService {
@@ -69,11 +64,16 @@ public class ScaleService {
     	
     	try
     	{
+
 	    	Result result = bo.getResult(id, data);
-	    	bo.saveResult(id, baseId, result);
+
+	    	bo.saveResult(id, baseId, result);   	
+	    	
     	} catch (ScaleException e) {
     		strReturn = e.getMessage();
     	}
+    	
+    	System.gc();
     	
     	return strReturn;
     }
