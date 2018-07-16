@@ -8,18 +8,8 @@ public class OptionSelected implements Serializable, Comparable<OptionSelected> 
 	private int questionId;
 	private String optionId;
 	private int score;
+	private String text;
 	
-	public OptionSelected() {
-		super();
-	}
-
-	public OptionSelected(int questionId, String optionId, int score) {
-		super();
-		this.questionId = questionId;
-		this.optionId = optionId;
-		this.score = score;
-	}
-
 	public int getQuestionId() {
 		return questionId;
 	}
@@ -42,6 +32,14 @@ public class OptionSelected implements Serializable, Comparable<OptionSelected> 
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	@Override

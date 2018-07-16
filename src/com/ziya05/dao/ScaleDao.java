@@ -479,6 +479,41 @@ public class ScaleDao implements IScaleDao {
 	}
 	
 	@Override
+	public void insertTesteeDataText(int scaleId, int baseId, List<OptionSelected> selectedDataLst)
+			throws ClassNotFoundException, SQLException {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			conn = getConn();
+			conn.setAutoCommit(false);
+	
+			String sql = "insert into testeedatatext(scaleId, baseId, questionId, text) values(?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			for(OptionSelected os : selectedDataLst) {
+				pstmt.setInt(1, scaleId);
+				pstmt.setInt(2,  baseId);
+				pstmt.setInt(3,  os.getQuestionId());
+				pstmt.setString(4, os.getText());
+				
+				pstmt.addBatch();
+			}
+			
+			pstmt.executeBatch();
+			conn.commit();
+			
+			conn.setAutoCommit(true);	
+		
+		} finally {
+			this.closeStatement(pstmt);
+			this.closeConn(conn);
+		}
+	}
+	
+	@Override
 	public void insertResultBase(int scaleId, int testeeBaseId, Result result)
 			throws ClassNotFoundException, SQLException {
 		

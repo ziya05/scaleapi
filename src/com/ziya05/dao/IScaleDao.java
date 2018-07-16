@@ -7,6 +7,7 @@ import com.ziya05.entities.Factor;
 import com.ziya05.entities.FactorMap;
 import com.ziya05.entities.GlobalJump;
 import com.ziya05.entities.Group;
+import com.ziya05.entities.OptionSelected;
 import com.ziya05.entities.PersonalInfo;
 import com.ziya05.entities.Relation;
 import com.ziya05.entities.Result;
@@ -35,6 +36,8 @@ public interface IScaleDao {
 	void insertTesteePersonalInfo(int scaleId, int baseId, TesteeData data) throws ClassNotFoundException, SQLException;
 	
 	void insertTesteeData(int scaleId, int baseId, TesteeData data) throws ClassNotFoundException, SQLException;
+	
+	void insertTesteeDataText(int scaleId, int baseId, List<OptionSelected> selectedDataLst) throws ClassNotFoundException, SQLException;
 	
 	void insertResultBase(int scaleId, int testeeBaseId, Result result) throws ClassNotFoundException, SQLException;
 	

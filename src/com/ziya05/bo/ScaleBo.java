@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
+import com.mysql.cj.util.StringUtils;
 import com.ziya05.dao.IScaleDao;
 import com.ziya05.entities.Factor;
 import com.ziya05.entities.FactorMap;
@@ -346,6 +347,14 @@ public class ScaleBo implements IScaleBo {
 		dao.insertTesteePersonalInfo(scaleId, baseId, data);
 		dao.insertTesteeData(scaleId, baseId, data);
 		
+		List<OptionSelected> selectedDataLst = new ArrayList<OptionSelected>();
+		for(OptionSelected os : data.getData().getItems()) {
+			if (!StringUtils.isNullOrEmpty(os.getText())) {
+				selectedDataLst.add(os);
+			}
+		}
+		dao.insertTesteeDataText(scaleId, baseId, selectedDataLst);
+		
 		return baseId;
 	}
 	
@@ -354,7 +363,7 @@ public class ScaleBo implements IScaleBo {
 		
 		StringBuilder sb = new StringBuilder();
 		List<OptionSelected> osLst = result.getData().getData().getItems();
-		for(OptionSelected os : osLst) {
+		for(OptionSelected os : osLst) {		
 			sb.append(os.getScore() + ",");
 		}
 		dao.updateResultScore(scaleId, baseId, sb.toString());
